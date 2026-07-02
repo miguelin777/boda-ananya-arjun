@@ -882,33 +882,148 @@
 </section>
 
 <!-- Contacto / Reserva -->
-<section id="contact" class="w-full flex justify-center items-center py-16 px-12 bg-white relative z-10">
-  <div class="max-w-7xl w-full bg-neutral-surface py-24 px-12 flex flex-col items-center justify-center gap-6 rounded-3xl text-center" data-animation-on-scroll="">
-    <div class="flex flex-col items-center justify-center gap-3">
-      <div class="flex items-center justify-center gap-4 mb-6">
-        <svg class="w-6 h-6 text-brand-primary fill-current animate-pulse delay-75" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
-        <svg class="w-8 h-8 text-brand-primary fill-current animate-bounce" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
-        <svg class="w-6 h-6 text-brand-primary fill-current animate-pulse delay-150" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+<section id="contact" class="w-full flex justify-center py-24 px-6 md:px-12 bg-neutral-background relative z-10">
+  <div class="max-w-7xl w-full mx-auto flex flex-col gap-16">
+
+    <!-- Encabezado cálido -->
+    <div class="text-center" data-animation-on-scroll="">
+      <div class="inline-block mb-4 overflow-hidden">
+        <span class="block border-b-2 border-brand-primary/30 pb-2 text-brand-primary font-bold tracking-[0.2em] uppercase text-sm">Contacto</span>
       </div>
-      <h2 class="font-primary text-[40px] lg:text-[48px] leading-tight text-brand-primary font-bold tracking-tight">¿List@ para apartar tu fecha?</h2>
-      <p class="max-w-xl opacity-80 mb-8">Agenda una visita sin costo y te mostramos cada rincón. Nuestra coordinadora resuelve todas tus dudas de fechas, paquetes y servicios.</p>
+      <h2 class="font-primary text-5xl lg:text-7xl font-ultra text-brand-primary mb-6">Ven a conocernos</h2>
+      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Agenda una visita sin costo. Marisol, nuestra coordinadora, te recibe y resuelve todas tus dudas de fechas, paquetes y servicios.</p>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-8 items-center">
-      <div class="flex items-center gap-3 border border-brand-primary/20 px-6 py-4 rounded-full">
-         <span class="font-bold">Coordinadora (Marisol):</span>
-         <a href="tel:+524611234567" class="text-brand-primary hover:underline">461 123 4567</a>
+    <!-- 2 columnas: IZQUIERDA datos · DERECHA mapa -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+
+      <!-- IZQUIERDA · Tarjeta de datos -->
+      <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-lg p-8 md:p-10 flex flex-col gap-7" data-animation-on-scroll="">
+        <div>
+          <h3 class="font-primary font-ultra text-3xl text-brand-primary">Hacienda Los Encinos</h3>
+          <p class="text-brand-muted italic mt-1">Con Marisol, coordinadora de eventos.</p>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+          </span>
+          <div>
+            <p class="font-bold text-brand-primary">Dónde estamos</p>
+            <p class="text-text-primary/80 leading-relaxed">Carr. Celaya&ndash;Cortazar km 4, Celaya, Gto.<br><span class="text-brand-muted italic">A 10 min del centro de Celaya.</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm0 18a8 8 0 110-16 8 8 0 010 16zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"></path></svg>
+          </span>
+          <div>
+            <p class="font-bold text-brand-primary">Horarios de atención</p>
+            <p class="text-text-primary/80 leading-relaxed">Lun&ndash;Dom · 10:00&ndash;19:00<br><span class="text-brand-muted italic">Visitas al jardín con cita previa.</span></p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.699zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+          </span>
+          <div>
+            <p class="font-bold text-brand-primary">Teléfono &amp; WhatsApp</p>
+            <a href="tel:+524611234567" class="text-text-primary/80 hover:text-brand-primary transition-colors">461 123 4567</a>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-4">
+          <span class="flex-shrink-0 w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
+          </span>
+          <div>
+            <p class="font-bold text-brand-primary">Correo</p>
+            <a href="mailto:eventos@losencinos.mx" class="text-text-primary/80 hover:text-brand-primary transition-colors">eventos@losencinos.mx</a>
+          </div>
+        </div>
+
+        <div class="mt-auto pt-6 border-t border-brand-primary/10">
+          <p class="font-bold text-brand-primary mb-3">Síguenos</p>
+          <div class="flex items-center gap-4">
+            <a href="#" aria-label="Instagram de Hacienda Los Encinos" class="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.42-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.17-.42-.37-1.06-.42-2.23C2.21 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.37 2.23-.42C8.42 2.21 8.8 2.2 12 2.2zm0 1.62c-3.15 0-3.52.01-4.76.07-.9.04-1.38.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.33-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.04.9.19 1.38.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.33.13.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.38-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.33.28-.81.32-1.71.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.9-.19-1.38-.32-1.71-.17-.43-.37-.74-.69-1.06-.32-.32-.63-.52-1.06-.69-.33-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.42 5.42 0 110 10.84 5.42 5.42 0 010-10.84zm0 8.94a3.52 3.52 0 100-7.04 3.52 3.52 0 000 7.04zm6.9-9.15a1.27 1.27 0 11-2.54 0 1.27 1.27 0 012.54 0z"></path></svg>
+            </a>
+            <a href="#" aria-label="Facebook de Hacienda Los Encinos" class="w-11 h-11 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"></path></svg>
+            </a>
+            <span class="text-brand-muted italic text-sm">@haciendalosencinos</span>
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-3 border border-brand-primary/20 px-6 py-4 rounded-full">
-         <span class="font-bold">Email:</span>
-         <a href="mailto:eventos@losencinos.mx" class="text-brand-primary hover:underline">eventos@losencinos.mx</a>
+
+      <!-- DERECHA · Mapa OpenStreetMap -->
+      <div class="flex flex-col gap-4" data-animation-on-scroll="">
+        <div class="flex-1 rounded-2xl overflow-hidden border border-brand-primary/10 shadow-lg min-h-[360px] bg-neutral-surface">
+          <iframe
+            title="Ubicación de Hacienda Los Encinos en el mapa"
+            class="w-full h-full"
+            style="border:0; min-height:360px;"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=-100.8600%2C20.5050%2C-100.7650%2C20.5450&amp;layer=mapnik&amp;marker=20.5236%2C-100.8158"></iframe>
+        </div>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Celaya%2C%20Guanajuato" target="_blank" rel="noopener" class="text-center bg-brand-primary text-white font-medium px-8 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center justify-center gap-2">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+          Cómo llegar
+        </a>
       </div>
+
     </div>
 
-    <a href="https://wa.me/524611234567?text=Hola,%20me%20interesa%20cotizar%20un%20evento%20en%20Los%20Encinos" target="_blank" class="mt-4 bg-brand-primary text-white font-medium px-8 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.699zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
-      Cotizar por WhatsApp
-    </a>
+    <!-- Ancho completo · Formulario a WhatsApp -->
+    <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-lg p-8 md:p-12" data-animation-on-scroll="">
+      <div class="max-w-3xl mx-auto text-center mb-8">
+        <span class="text-brand-secondary font-bold tracking-[0.2em] uppercase text-xs">Cotización rápida</span>
+        <h3 class="font-primary font-ultra text-3xl md:text-4xl text-brand-primary mt-3">Cuéntanos de tu evento</h3>
+        <p class="text-brand-muted italic mt-2">Llena estos datos y te contactamos por WhatsApp con la disponibilidad y el paquete ideal.</p>
+      </div>
+
+      <form id="cotiza-form" action="https://wa.me/524611234567" method="get" target="_blank" class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="flex flex-col gap-1.5">
+          <label for="cf-nombre" class="text-sm font-bold text-brand-primary">Tu nombre</label>
+          <input id="cf-nombre" name="nombre" type="text" placeholder="Ej. Ana López" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="cf-tipo" class="text-sm font-bold text-brand-primary">Tipo de evento</label>
+          <select id="cf-tipo" name="tipo" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+            <option value="Boda">Boda</option>
+            <option value="XV Años">XV Años</option>
+            <option value="Corporativo">Corporativo</option>
+            <option value="Social">Social</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="cf-fecha" class="text-sm font-bold text-brand-primary">Fecha tentativa</label>
+          <input id="cf-fecha" name="fecha" type="date" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+        </div>
+
+        <div class="flex flex-col gap-1.5">
+          <label for="cf-invitados" class="text-sm font-bold text-brand-primary">No. de invitados</label>
+          <input id="cf-invitados" name="invitados" type="number" min="1" placeholder="Ej. 200" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+        </div>
+
+        <div class="md:col-span-2 flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
+          <button type="submit" class="w-full sm:w-auto bg-brand-primary text-white font-medium px-10 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.699zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+            Cotizar por WhatsApp
+          </button>
+          <a href="https://wa.me/524611234567?text=Hola,%20me%20interesa%20cotizar%20un%20evento%20en%20Hacienda%20Los%20Encinos" target="_blank" rel="noopener" class="text-brand-primary hover:text-brand-secondary underline underline-offset-4 transition-colors text-sm">
+            o escríbenos directo por WhatsApp
+          </a>
+        </div>
+      </form>
+    </div>
+
   </div>
 </section>
 
@@ -1071,6 +1186,32 @@
         }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
         map.forEach((_, section) => spy.observe(section));
       })();
+
+      /* ===== Formulario de cotización → WhatsApp (#cotiza-form) ===== */
+      const cotizaForm = document.getElementById('cotiza-form');
+      if (cotizaForm) {
+        cotizaForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const val = (id) => {
+            const el = document.getElementById(id);
+            return el && el.value ? el.value.trim() : '';
+          };
+          const nombre = val('cf-nombre');
+          const tipo = val('cf-tipo');
+          const fecha = val('cf-fecha');
+          const invitados = val('cf-invitados');
+
+          let msg = '¡Hola Hacienda Los Encinos! Me interesa cotizar un evento.';
+          if (nombre) msg += '\n• Nombre: ' + nombre;
+          if (tipo) msg += '\n• Tipo de evento: ' + tipo;
+          if (fecha) msg += '\n• Fecha tentativa: ' + fecha;
+          if (invitados) msg += '\n• Invitados: ' + invitados;
+
+          const url = 'https://wa.me/524611234567?text=' + encodeURIComponent(msg);
+          const win = window.open(url, '_blank');
+          if (!win) window.location.href = url;
+        });
+      }
     });
   </script>
 
