@@ -130,6 +130,15 @@
       #app-root .animate-on-scroll-hidden{ transform:none !important; transition:opacity .01ms !important; }
       #app-root .animate-ping, #app-root .animate-pulse, #app-root .animate-bounce{ animation:none !important; }
     }
+
+    /* FAQ — Acordeón nativo <details>/<summary> (sin JS): quitar marker + rotar chevron */
+    #app-root .faq-summary { list-style: none; }
+    #app-root .faq-summary::-webkit-details-marker { display: none; }
+    #app-root .faq-summary::marker { content: ""; }
+    #app-root details.faq-item[open] .faq-chevron { transform: rotate(180deg); }
+    @media (prefers-reduced-motion: reduce){
+      #app-root .faq-chevron { transition: none !important; }
+    }
   </style>
 
 <style type="text/tailwindcss">@tailwind base;
@@ -757,6 +766,115 @@
       <p class="text-brand-muted italic mb-6">Tu evento puede ser el próximo que todos recuerden.</p>
       <a href="#contact" class="bg-brand-primary text-white font-medium px-8 py-4 rounded-full hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
         Quiero mi cotización
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Preguntas frecuentes (FAQ) -->
+<section id="faq" class="w-full py-24 px-6 md:px-12 bg-neutral-surface relative z-10 border-t border-brand-primary/5">
+  <div class="max-w-7xl mx-auto flex flex-col gap-16">
+
+    <!-- Encabezado de sección -->
+    <div class="text-center" data-animation-on-scroll="">
+      <div class="inline-block mb-4 overflow-hidden">
+        <span class="block border-b-2 border-brand-primary/30 pb-2 text-brand-primary font-bold tracking-[0.2em] uppercase text-sm">Preguntas frecuentes</span>
+      </div>
+      <h2 class="font-primary text-5xl lg:text-7xl font-ultra text-brand-primary mb-6">Antes de apartar tu fecha</h2>
+      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Resolvemos las dudas más comunes. ¿Te queda otra? Marisol, nuestra coordinadora, te atiende con gusto.</p>
+    </div>
+
+    <!-- Acordeón nativo (una columna centrada, sin JavaScript) -->
+    <div class="max-w-3xl mx-auto w-full flex flex-col gap-4" data-animation-on-scroll="">
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl" open>
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Cómo aparto mi fecha y cuánto es el anticipo?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">La fecha se aparta con un anticipo del <strong class="text-text-primary font-normal">30%</strong> y la firma del contrato; ese día queda bloqueada solo para tu evento. Te recomendamos reservar con <strong class="text-text-primary font-normal">6 a 12 meses</strong> de anticipación, sobre todo para temporada alta. Agenda una visita sin costo y con gusto revisamos disponibilidad.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Puedo llevar mis propios proveedores o catering?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Sí. Nuestros paquetes incluyen banquete y coordinación, pero también trabajamos con los proveedores de tu confianza: catering, DJ, decoración o fotografía. El <strong class="text-text-primary font-normal">descorche no tiene costo</strong> y solo pedimos los datos de tus proveedores externos para coordinar accesos y montaje. Así armamos tu evento a tu medida.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Hay estacionamiento y seguridad para mis invitados?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Todos los paquetes incluyen <strong class="text-text-primary font-normal">amplio estacionamiento dentro del predio</strong> y <strong class="text-text-primary font-normal">vigilancia</strong> durante todo el evento, para que tú y tus invitados disfruten con tranquilidad. Estamos a solo 10 minutos del centro de Celaya, con acceso cómodo para autobuses y transporte contratado.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Cuál es la capacidad del salón y el jardín?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Entre el jardín y el salón climatizado recibimos <strong class="text-text-primary font-normal">hasta 450 invitados</strong>. Los espacios son flexibles: funcionan igual para una celebración íntima de 80 personas que para una gran boda o XV años. En tu visita definimos el montaje ideal según tu número de invitados y el estilo que buscas.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿El jardín tiene plan B en caso de lluvia?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Siempre. Nuestro <strong class="text-text-primary font-normal">salón climatizado funciona como plan B</strong> y se monta en paralelo, sin costo extra, para trasladar tu evento en cuestión de minutos si el clima cambia. Tu celebración sigue tal cual la planeaste, sin sorpresas ni contratiempos.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Qué formas de pago y planes manejan?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Aceptamos transferencia, tarjeta y efectivo, y ofrecemos <strong class="text-text-primary font-normal">planes de pago a meses sin intereses</strong> repartidos hasta la fecha de tu evento, para que no tengas que liquidar todo de una vez. Firmamos un contrato claro con el desglose completo y sin cargos ocultos. Con gusto armamos un calendario de pagos a tu medida.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿A qué hora puede terminar el evento?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Según el paquete, tu evento incluye de <strong class="text-text-primary font-normal">6 a 12 horas</strong> de uso. El horario habitual de término es a las <strong class="text-text-primary font-normal">2:00 a.m.</strong>, y si quieres extenderlo lo cotizamos por hora adicional con anticipación. Nos ajustamos a la dinámica de tu fiesta para que nadie sienta que el tiempo se acabó demasiado pronto.</p>
+        </div>
+      </details>
+
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+        <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
+          <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿El evento incluye coordinación?</span>
+          <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+        </summary>
+        <div class="px-6 md:px-8 pb-7 -mt-1">
+          <p class="text-brand-muted leading-relaxed">Sí. Todos los paquetes incluyen <strong class="text-text-primary font-normal">coordinación</strong> con nuestra coordinadora <strong class="text-text-primary font-normal">Marisol</strong>, que te acompaña desde la planeación hasta el día del evento: agenda de tiempos, montaje, enlace con proveedores y logística. El día de tu celebración tú solo disfrutas; del resto nos encargamos nosotros.</p>
+        </div>
+      </details>
+
+    </div>
+
+    <!-- Cierre / CTA suave -->
+    <div class="text-center" data-animation-on-scroll="">
+      <p class="text-brand-muted italic mb-6">¿Tienes una duda que no viste aquí? Con gusto te la resolvemos.</p>
+      <a href="#contact" class="bg-brand-primary text-white font-medium px-8 py-4 rounded-full hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
+        Hablar con la coordinadora
       </a>
     </div>
 
