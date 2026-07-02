@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="es" class="scroll-smooth"><head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Hacienda Los Encinos — Jardín & Salón de eventos</title>
+  <meta name="description" content="Jardín y salón de eventos en Celaya, Guanajuato. Bodas, XV años y eventos sociales con banquete y coordinación incluida.">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  <style>
+    .animate-on-scroll-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .animate-on-scroll-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       MOTION PACKAGE — "Cinemático restringido" · Los Encinos
+       Solo transform/opacity/clip-path/filter. Los estados que
+       OCULTAN contenido se gatean con .js-motion (raíz) para
+       degradar sin FOUC permanente si el JS no corre.
+       ============================================================ */
+    :root{
+      --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+      --t-fast: .5s;
+      --t-base: .9s;
+      --t-slow: 1.4s;
+    }
+
+    /* 1. HERO: el H1 "asienta" (blur->foco + tracking) — opt-in por JS */
+    .hero-h1{
+      animation: heroSettle var(--t-slow) var(--ease-cine) .15s both;
+      will-change: filter, transform;
+    }
+    @keyframes heroSettle{
+      from{ opacity:0; filter:blur(12px); transform:scale(1.04); letter-spacing:.12em; }
+      60% { opacity:1; }
+      to  { opacity:1; filter:blur(0);    transform:scale(1);    letter-spacing:-.03em; }
+    }
+    .hero-tag{ opacity:0; animation: tagReveal var(--t-base) var(--ease-cine) both; }
+    .hero-tag--l{ animation-delay:.35s; }
+    .hero-tag--r{ animation-delay:.5s; }
+    @keyframes tagReveal{
+      from{ clip-path: inset(0 0 100% 0); opacity:0; transform:translateY(8px); }
+      to  { clip-path: inset(0 0 0 0);    opacity:1; transform:translateY(0); }
+    }
+    .hero-rule{ transform:scaleX(0); transform-origin:center; animation: ruleDraw var(--t-base) var(--ease-cine) .25s both; }
+    @keyframes ruleDraw{ to{ transform:scaleX(1); } }
+
+    /* 2. HERO: Ken Burns + parallax (factor bajo + zoom base amplio = sin hueco) */
+    .hero-media{ transform: translate3d(0, var(--py, 0px), 0); will-change: transform; }
+    .hero-media img{
+      transform-origin: 50% 45%;
+      animation: kenburns 26s var(--ease-cine) infinite alternate;
+      will-change: transform;
+    }
+    .hero-media.is-paused img{ animation-play-state: paused; }
+    @keyframes kenburns{ from{ transform:scale(1.10); } to{ transform:scale(1.18); } }
+
+    /* 3. STAGGER de las 3 tarjetas del venue (cuelga del observer existente) */
+    .js-motion [data-stagger] > *{
+      opacity:0; transform:translateY(22px);
+      transition: opacity var(--t-base) var(--ease-cine), transform var(--t-base) var(--ease-cine);
+      transition-delay: calc(var(--i, 0) * 90ms);
+    }
+    .js-motion [data-stagger].animate-on-scroll-visible > *{ opacity:1; transform:translateY(0); }
+
+    /* 4. WIPE clip-path de las fotos (contenedor, no la img, para no chocar con hover:scale) */
+    .js-motion [data-reveal-img]{
+      clip-path: inset(0 0 100% 0);
+      transition: clip-path var(--t-slow) var(--ease-cine);
+      will-change: clip-path;
+    }
+    .js-motion [data-reveal-img].animate-on-scroll-visible,
+    .js-motion [data-reveal-img].is-revealed{ clip-path: inset(0 0 0 0); }
+
+    /* 5. SIGNATURE: trazo de la LÍNEA DE TIEMPO por scroll */
+    .timeline-progress{
+      position:absolute; left:50%; top:0; width:2px; height:100%;
+      transform: translateX(-50%) scaleY(var(--tl-p, 0)); transform-origin: top center;
+      background: linear-gradient(to bottom, #B08D57, #3B5D50);
+      opacity:.9; z-index:1; will-change: transform; pointer-events:none;
+    }
+    @media (max-width:767px){ .timeline-progress{ display:none; } }
+    .js-motion .tl-node{ transition: box-shadow var(--t-fast) var(--ease-cine); }
+    .js-motion .tl-node .tl-dot-inner{
+      opacity:.35; transform:scale(.6);
+      transition: opacity var(--t-fast) var(--ease-cine), transform var(--t-fast) var(--ease-cine);
+      animation-play-state: paused;
+    }
+    .js-motion .tl-node.lit{ box-shadow:0 0 0 6px rgba(176,141,87,.15); }
+    .js-motion .tl-node.lit .tl-dot-inner{ opacity:1; transform:scale(1); animation-play-state: running; }
+
+    /* 6. SCROLL-SPY del nav: subrayado dorado con wipe */
+    .nav-link{ position:relative; }
+    .nav-link::after{
+      content:""; position:absolute; left:0; right:0; bottom:-4px; height:1.5px;
+      background:#B08D57; transform:scaleX(0); transform-origin:left;
+      transition: transform var(--t-fast) var(--ease-cine);
+    }
+    .nav-link.nav-active::after{ transform:scaleX(1); }
+
+    /* 7. FAB flotante de WhatsApp */
+    .wa-fab{
+      position:fixed; right:20px; bottom:20px; z-index:60;
+      width:56px; height:56px; border-radius:9999px;
+      display:flex; align-items:center; justify-content:center;
+      background:#3B5D50; color:#fff; box-shadow:0 4px 15px rgba(59,93,80,.25);
+      opacity:0; transform:translateY(16px) scale(.9); pointer-events:none;
+      transition: opacity var(--t-base) var(--ease-cine),
+                  transform var(--t-base) var(--ease-cine),
+                  background-color .3s ease;
+    }
+    .wa-fab.show{ opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+    .wa-fab:hover{ background:#B08D57; transform:translateY(0) scale(1.06); }
+
+    /* ===== REDUCED MOTION — neutraliza TODO, deja estados finales visibles ===== */
+    @media (prefers-reduced-motion: reduce){
+      .hero-h1{ animation:none !important; filter:none !important; transform:none !important; letter-spacing:-.03em !important; opacity:1 !important; }
+      .hero-tag{ animation:none !important; clip-path:none !important; opacity:1 !important; transform:none !important; }
+      .hero-rule{ animation:none !important; transform:none !important; }
+      .hero-media{ transform:none !important; }
+      .hero-media img{ animation:none !important; transform:none !important; }
+      .js-motion [data-stagger] > *{ transition:none !important; transition-delay:0s !important; opacity:1 !important; transform:none !important; }
+      .js-motion [data-reveal-img]{ clip-path:none !important; transition:none !important; }
+      .timeline-progress{ transform:translateX(-50%) scaleY(1) !important; }
+      .js-motion .tl-node .tl-dot-inner{ opacity:1 !important; transform:scale(1) !important; animation:none !important; }
+      .nav-link::after{ transition:none !important; }
+      .wa-fab{ transition: opacity .3s ease !important; transform:none !important; }
+      .wa-fab.show{ transform:none !important; }
+      .wa-fab:hover{ transform:none !important; }
+      #app-root .animate-on-scroll-hidden{ transform:none !important; transition:opacity .01ms !important; }
+      #app-root .animate-ping, #app-root .animate-pulse, #app-root .animate-bounce{ animation:none !important; }
+    }
+  </style>
+
+<style type="text/tailwindcss">@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .font-ultra {
+    font-weight: 900;
+  }
+}
+
+.animate-reveal {
+  animation: revealHeight 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes revealHeight {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0); }
+}</style><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config = {
+  important: '#app-root',
+  theme: {
+    extend: {
+      colors: {
+        'brand-primary': '#3B5D50', // Verde bosque profundo
+        'brand-secondary': '#B08D57', // Dorado cálido
+        'brand-muted': '#6f7d74',
+        'neutral-background': 'rgb(250, 247, 240)', // Crema
+        'neutral-surface': 'rgb(238, 232, 220)',
+        'text-primary': 'rgb(45, 51, 46)',
+        'text-secondary': 'rgb(111, 125, 116)',
+        'text-onPrimary': 'rgb(255, 255, 255)',
+        'overlay-bg': 'rgba(45, 51, 46, 0.4)',
+      },
+      fontFamily: {
+        'primary': ['"Libre Caslon Display"', 'serif'],
+        'secondary': ['"Libre Caslon Text"', 'serif'],
+      },
+      borderRadius: {
+        'lg': '40px',
+      },
+      boxShadow: {
+        'cta': '0 4px 15px rgba(59, 93, 80, 0.25)',
+      }
+    }
+  }
+}</script></head>
+
+<body id="app-root" class="font-secondary bg-neutral-background text-text-primary overflow-x-hidden">
+
+  <header class="fixed top-4 left-6 right-6 z-50">
+    <nav id="main-nav" class="transition-all duration-500 rounded-full px-8 py-3 flex items-center justify-between">
+      <a class="font-primary text-2xl font-bold text-white transition-colors duration-500" id="nav-logo" href="#">
+        Los Encinos
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#intro">El lugar</a>
+        <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#venue">Espacios</a>
+        <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#timeline">Ocasiones</a>
+      </div>
+      <a href="#contact" class="bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
+        Cotizar
+      </a>
+    </nav>
+  </header>
+
+  <main><header class="fixed inset-0 w-full h-screen z-0 overflow-hidden select-none">
+  <div class="absolute inset-0 z-0 hero-media">
+    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Jardín de eventos con kiosco y montaje de ceremonia" class="w-full h-full object-cover object-center">
+    <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/50 via-transparent to-black/25"></div>
+  </div>
+
+  <div class="relative z-10 w-full max-w-7xl h-full flex flex-col justify-end pb-24 gap-4" data-animation-on-scroll="">
+    <div class="w-full flex flex-col md:flex-row justify-between items-center border-b border-white/40 pb-4">
+      <div class="flex-1 text-left">
+        <p class="font-primary text-[20px] font-bold text-white uppercase tracking-wider">
+          Jardín &amp; Salón de eventos
+        </p>
+      </div>
+      <div class="flex-1 text-right mt-2 md:mt-0">
+        <p class="font-primary text-[20px] font-bold text-white uppercase tracking-wider">
+          Celaya, Guanajuato
+        </p>
+      </div>
+    </div>
+
+    <div class="w-full text-center">
+      <h1 class="font-primary font-bold text-white leading-[0.9] tracking-[-0.03em] break-words" style="font-size: clamp(2.6rem, 12vw, 150px);">
+        Hacienda Los Encinos
+      </h1>
+    </div>
+  </div>
+</header>
+
+<!-- Espaciador para el hero fijo -->
+<div class="h-screen w-full relative z-0 pointer-events-none"></div>
+
+<!-- Intro / Manifiesto -->
+<section class="flex flex-col items-center justify-center relative w-full py-[120px] px-12 gap-8 text-center bg-neutral-background z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]" id="intro">
+  <div class="flex items-center justify-center gap-[10px] w-full h-6 mb-2">
+    <svg class="w-[15px] h-[15px] text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+    <svg class="w-6 h-6 text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+    <svg class="w-[15px] h-[15px] text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+  </div>
+
+  <div class="max-w-[800px] w-full" data-animation-on-scroll="">
+    <h2 class="font-primary font-ultra text-[34px] lg:text-[42px] leading-[1.3] text-brand-primary">
+      Un lugar hecho para celebrar.
+      <span class="text-brand-muted italic">Desde bodas de ensueño hasta XV años inolvidables, cada evento en Los Encinos se vive entre jardines, cantera y la calidez de una hacienda del Bajío.</span>
+    </h2>
+  </div>
+</section>
+
+<!-- Espacios -->
+<section id="venue" class="flex flex-col items-center justify-center w-full pt-12 pb-[120px] px-12 bg-white">
+  <div class="w-full max-w-7xl flex flex-col gap-12">
+    <div class="flex flex-col md:flex-row items-end justify-between w-full gap-6">
+      <div class="flex flex-col items-start gap-3">
+        <p class="font-secondary text-brand-muted">El lugar</p>
+        <h2 class="font-primary text-5xl lg:text-6xl font-ultra text-brand-primary uppercase leading-tight tracking-tight">
+          Hacienda Los Encinos
+        </h2>
+        <p class="font-secondary text-brand-primary text-lg mt-1 italic">Carr. Celaya–Cortázar km 4, Celaya, Gto.</p>
+      </div>
+      <a href="https://maps.google.com" target="_blank" class="bg-brand-primary text-white px-8 py-3 rounded-full hover:bg-brand-secondary transition-all">
+        Ver en mapa
+      </a>
+    </div>
+
+    <div class="flex flex-col gap-6 items-start">
+      <div class="bg-brand-primary/10 border border-brand-primary/20 px-6 py-2 rounded-full inline-flex items-center gap-2" data-animation-on-scroll="">
+        <svg class="w-4 h-4 text-brand-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
+        <span class="font-primary font-bold text-xl tracking-wide text-brand-primary uppercase">2 hectáreas de jardín + salón climatizado</span>
+      </div>
+      <div class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl" data-animation-on-scroll="" data-reveal-img>
+          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Salón principal montado para evento" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-brand-primary/10 origin-bottom animate-reveal"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-animation-on-scroll="" data-stagger>
+      <!-- Capacidad -->
+      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.65"></path></svg>
+        </div>
+        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Capacidad</h5>
+        <p class="text-brand-muted leading-relaxed">Hasta 450 invitados entre el jardín y el salón principal. Espacios flexibles lo mismo para un evento íntimo que para una gran celebración.</p>
+      </div>
+      <!-- Servicios -->
+      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+        </div>
+        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Servicios</h5>
+        <p class="text-brand-muted leading-relaxed">Banquete, mobiliario, iluminación, pista y coordinación incluida. ¿Ya tienes proveedores? También trabajamos con los de tu confianza.</p>
+      </div>
+      <!-- Ubicación -->
+      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        </div>
+        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Ubicación</h5>
+        <p class="text-brand-muted leading-relaxed">A 10 minutos del centro de Celaya, con amplio estacionamiento y acceso cómodo para el transporte de tus invitados.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ocasiones -->
+<section id="timeline" class="py-24 bg-white relative z-10 border-t border-neutral-surface">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-24" data-animation-on-scroll="">
+      <div class="inline-block mb-4 overflow-hidden">
+        <span class="block border-b-2 border-brand-primary/30 pb-2 text-brand-primary font-bold tracking-[0.2em] uppercase text-sm">Ocasiones</span>
+      </div>
+      <h2 class="font-primary text-5xl lg:text-7xl font-ultra text-brand-primary mb-6">Para cada celebración</h2>
+      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Un mismo lugar que se transforma según tu evento.</p>
+    </div>
+
+    <div class="space-y-0 max-w-5xl mx-auto relative">
+      <!-- Línea vertical continua -->
+      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-brand-primary/0 via-brand-primary/30 to-brand-primary/0 -translate-x-1/2"></div>
+
+      <!-- Bodas (izquierda) -->
+      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
+        <div class="flex-1 md:text-right order-2 md:order-1 space-y-6 pb-24 transition-all duration-700 group-hover:translate-x-[-10px]">
+          <div class="md:hidden text-brand-primary font-bold mb-2">Bodas · Jardín &amp; Salón</div>
+          <h3 class="font-primary text-4xl font-bold text-brand-primary">Bodas de ensueño</h3>
+          <p class="text-brand-muted leading-relaxed">El escenario perfecto para tu gran día: ceremonia al aire libre entre los jardines y recepción de gala en el salón principal.</p>
+          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Pareja de novios en jardín" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="hidden md:flex flex-col items-center order-2 relative">
+          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
+             <div class="w-2 h-2 rounded-full bg-brand-primary animate-ping tl-dot-inner"></div>
+          </div>
+        </div>
+        <div class="hidden md:block flex-1 order-3 pt-1 pl-4">
+          <div class="bg-brand-primary/5 border-l-2 border-brand-primary p-4 rounded-r-lg">
+             <span class="text-brand-primary font-bold text-2xl block">Bodas</span>
+             <span class="text-brand-muted font-medium">Jardín &amp; Salón principal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- XV Años (derecha) -->
+      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
+        <div class="hidden md:block flex-1 text-right pt-1 pr-4">
+          <div class="bg-brand-primary/5 border-r-2 border-brand-primary p-4 rounded-l-lg">
+             <span class="text-brand-primary font-bold text-2xl block">XV Años</span>
+             <span class="text-brand-muted font-medium">Pista, escenario y vals</span>
+          </div>
+        </div>
+        <div class="hidden md:flex flex-col items-center relative">
+          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
+             <div class="w-2 h-2 rounded-full bg-brand-primary tl-dot-inner"></div>
+          </div>
+        </div>
+        <div class="flex-1 space-y-6 pb-24 transition-all duration-700 group-hover:translate-x-[10px]">
+          <div class="md:hidden text-brand-primary font-bold mb-2">XV Años · Pista &amp; escenario</div>
+          <h3 class="font-primary text-4xl font-bold text-brand-primary">XV Años inolvidables</h3>
+          <p class="text-brand-muted leading-relaxed">Una noche mágica con pista amplia, escenario y espacio de sobra para el vals, la coreografía sorpresa y todos tus invitados.</p>
+          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Celebración junto a la alberca" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+          </div>
+        </div>
+      </div>
+
+      <!-- Social & Corporativo (izquierda) -->
+      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
+        <div class="flex-1 md:text-right order-2 md:order-1 space-y-6 pb-8 transition-all duration-700 group-hover:translate-x-[-10px]">
+          <div class="md:hidden text-brand-primary font-bold mb-2">Social &amp; Corporativo</div>
+          <h3 class="font-primary text-4xl font-bold text-brand-primary">Eventos sociales y de empresa</h3>
+          <p class="text-brand-muted leading-relaxed">Cenas, aniversarios, posadas y eventos corporativos con servicio de banquete, montaje profesional y coordinación de principio a fin.</p>
+          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Mesa larga montada para banquete" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+          </div>
+        </div>
+        <div class="hidden md:flex flex-col items-center order-2">
+          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
+             <div class="w-2 h-2 rounded-full bg-brand-primary animate-pulse tl-dot-inner"></div>
+          </div>
+        </div>
+        <div class="hidden md:block flex-1 order-3 pt-1 pl-4">
+          <div class="bg-brand-primary/5 border-l-2 border-brand-primary p-4 rounded-r-lg">
+             <span class="text-brand-primary font-bold text-2xl block">Social &amp; Corp.</span>
+             <span class="text-brand-muted font-medium">Banquete y montaje</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contacto / Reserva -->
+<section id="contact" class="w-full flex justify-center items-center py-16 px-12 bg-white relative z-10">
+  <div class="max-w-7xl w-full bg-neutral-surface py-24 px-12 flex flex-col items-center justify-center gap-6 rounded-3xl text-center" data-animation-on-scroll="">
+    <div class="flex flex-col items-center justify-center gap-3">
+      <div class="flex items-center justify-center gap-4 mb-6">
+        <svg class="w-6 h-6 text-brand-primary fill-current animate-pulse delay-75" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+        <svg class="w-8 h-8 text-brand-primary fill-current animate-bounce" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+        <svg class="w-6 h-6 text-brand-primary fill-current animate-pulse delay-150" viewBox="0 0 24 24"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
+      </div>
+      <h2 class="font-primary text-[40px] lg:text-[48px] leading-tight text-brand-primary font-bold tracking-tight">¿List@ para apartar tu fecha?</h2>
+      <p class="max-w-xl opacity-80 mb-8">Agenda una visita sin costo y te mostramos cada rincón. Nuestra coordinadora resuelve todas tus dudas de fechas, paquetes y servicios.</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-8 items-center">
+      <div class="flex items-center gap-3 border border-brand-primary/20 px-6 py-4 rounded-full">
+         <span class="font-bold">Coordinadora (Marisol):</span>
+         <a href="tel:+524611234567" class="text-brand-primary hover:underline">461 123 4567</a>
+      </div>
+      <div class="flex items-center gap-3 border border-brand-primary/20 px-6 py-4 rounded-full">
+         <span class="font-bold">Email:</span>
+         <a href="mailto:eventos@losencinos.mx" class="text-brand-primary hover:underline">eventos@losencinos.mx</a>
+      </div>
+    </div>
+
+    <a href="https://wa.me/524611234567?text=Hola,%20me%20interesa%20cotizar%20un%20evento%20en%20Los%20Encinos" target="_blank" class="mt-4 bg-brand-primary text-white font-medium px-8 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.699zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"></path></svg>
+      Cotizar por WhatsApp
+    </a>
+  </div>
+</section>
+
+</main>
+
+  <footer class="bg-brand-primary text-neutral-background py-16">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+       <h3 class="font-primary text-3xl mb-4">Hacienda Los Encinos</h3>
+       <p class="opacity-80">Celaya, Guanajuato · Jardín &amp; Salón de eventos</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ===== Refs base ===== */
+      const nav = document.getElementById('main-nav');
+      const logo = document.getElementById('nav-logo');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      /* ===== Reveals base (IntersectionObserver existente) ===== */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-on-scroll-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('[data-animation-on-scroll]').forEach(el => {
+        el.classList.add('animate-on-scroll-hidden');
+        observer.observe(el);
+      });
+
+      /* ============================================================
+         MOTION PACKAGE — "Cinemático restringido"
+         ============================================================ */
+      const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* Gate de degradación: solo oculta contenido si el JS corre */
+      document.documentElement.classList.add('js-motion');
+
+      /* 1. HERO: settle del H1 + tags + rule, y ref del media */
+      let heroMedia = null;
+      (function heroSetup(){
+        const heroHeader = document.querySelector('main > header');
+        if(!heroHeader) return;
+        const h1 = heroHeader.querySelector('h1');
+        if(h1 && !REDUCE){
+          h1.classList.add('hero-h1');
+          h1.addEventListener('animationend', () => { h1.style.willChange = 'auto'; }, { once:true });
+        }
+        const ruleRow = heroHeader.querySelector('.border-b');
+        if(ruleRow && !REDUCE){
+          ruleRow.classList.add('hero-rule');
+          const tags = ruleRow.querySelectorAll('p');
+          if(tags[0]) tags[0].classList.add('hero-tag','hero-tag--l');
+          if(tags[1]) tags[1].classList.add('hero-tag','hero-tag--r');
+        }
+        heroMedia = heroHeader.querySelector('.absolute.inset-0.z-0');
+        if(heroMedia) heroMedia.classList.add('hero-media');
+      })();
+
+      /* 2. STAGGER: índice a los hijos del grid del venue */
+      document.querySelectorAll('[data-stagger]').forEach(box => {
+        [...box.children].forEach((c, i) => c.style.setProperty('--i', i));
+      });
+
+      /* 3. TIMELINE: crear trazo + refs de nodos */
+      const tlSection = document.getElementById('timeline');
+      const tlTrack = tlSection ? tlSection.querySelector('.space-y-0.max-w-5xl') : null;
+      let tlProgress = null, tlNodes = [];
+      if(tlTrack){
+        tlProgress = document.createElement('div');
+        tlProgress.className = 'timeline-progress';
+        tlTrack.appendChild(tlProgress);
+        tlNodes = [...tlTrack.querySelectorAll('.tl-node')];
+      }
+
+      /* 4. Nav (misma lógica, ahora dentro del scheduler) */
+      function navFrame(y){
+        if(!nav) return;
+        if(y > 100){
+          nav.classList.add('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
+          if(logo) logo.classList.replace('text-white','text-brand-primary');
+          navLinks.forEach(l => l.classList.replace('text-white/90','text-text-primary'));
+        } else {
+          nav.classList.remove('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
+          if(logo) logo.classList.replace('text-brand-primary','text-white');
+          navLinks.forEach(l => l.classList.replace('text-text-primary','text-white/90'));
+        }
+      }
+
+      /* 5. Parallax del fondo fijo (solo mientras el hero es visible) */
+      function heroFrame(y){
+        if(REDUCE || !heroMedia) return;
+        if(y > window.innerHeight){ heroMedia.classList.add('is-paused'); return; }
+        heroMedia.classList.remove('is-paused');
+        heroMedia.style.setProperty('--py', (y * 0.03).toFixed(1) + 'px');
+      }
+
+      /* 6. Relleno de la línea de tiempo + encendido de nodos */
+      function timelineFrame(){
+        if(!tlTrack || !tlProgress) return;
+        if(REDUCE){ tlProgress.style.setProperty('--tl-p', 1); tlNodes.forEach(n => n.classList.add('lit')); return; }
+        const r = tlTrack.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const p = Math.max(0, Math.min(1, (vh * 0.55 - r.top) / (r.height * 0.8)));
+        tlProgress.style.setProperty('--tl-p', p.toFixed(3));
+        const filledPx = r.height * p;
+        tlNodes.forEach(n => {
+          const off = n.getBoundingClientRect().top - r.top;
+          n.classList.toggle('lit', off <= filledPx + vh * 0.02);
+        });
+      }
+
+      /* 7. FAB de WhatsApp: crear + toggle */
+      const waFab = document.createElement('a');
+      waFab.href = 'https://wa.me/524611234567?text=Hola,%20me%20interesa%20cotizar%20un%20evento%20en%20Los%20Encinos';
+      waFab.target = '_blank';
+      waFab.rel = 'noopener';
+      waFab.className = 'wa-fab';
+      waFab.setAttribute('aria-label','Cotizar por WhatsApp');
+      waFab.innerHTML = '<svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.945C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.557-5.338 11.892-11.893 11.892a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884a9.86 9.86 0 001.51 5.26l-.999 3.648 3.978-1.699zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.767.967-.94 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>';
+      document.body.appendChild(waFab);
+      function fabFrame(y){ waFab.classList.toggle('show', y > window.innerHeight * 0.6); }
+
+      /* 8. Scheduler único rAF (coalesce de nav + parallax + timeline + fab) */
+      let ticking = false;
+      function onScrollFrame(){
+        const y = window.scrollY;
+        navFrame(y); heroFrame(y); timelineFrame(); fabFrame(y);
+        ticking = false;
+      }
+      window.addEventListener('scroll', () => {
+        if(!ticking){ ticking = true; requestAnimationFrame(onScrollFrame); }
+      }, { passive:true });
+      window.addEventListener('resize', () => {
+        if(!ticking){ ticking = true; requestAnimationFrame(onScrollFrame); }
+      }, { passive:true });
+      onScrollFrame();
+
+      /* 9. Wipe de imágenes: revelar cuando entran */
+      if(!REDUCE){
+        const imgObs = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if(e.isIntersecting){ e.target.classList.add('is-revealed'); imgObs.unobserve(e.target); }
+          });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('[data-reveal-img]').forEach(el => imgObs.observe(el));
+      } else {
+        document.querySelectorAll('[data-reveal-img]').forEach(el => el.classList.add('is-revealed'));
+      }
+
+      /* 10. Scroll-spy del nav */
+      (function navSpy(){
+        const links = [...document.querySelectorAll('.nav-link')];
+        const map = new Map();
+        links.forEach(a => {
+          const href = a.getAttribute('href');
+          if(!href || href.charAt(0) !== '#' || href === '#') return;
+          const s = document.querySelector(href);
+          if(s) map.set(s, a);
+        });
+        if(!map.size) return;
+        const spy = new IntersectionObserver((entries) => {
+          entries.forEach(e => {
+            if(e.isIntersecting){
+              links.forEach(l => l.classList.remove('nav-active'));
+              const a = map.get(e.target); if(a) a.classList.add('nav-active');
+            }
+          });
+        }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+        map.forEach((_, section) => spy.observe(section));
+      })();
+    });
+  </script>
+
+
+</body></html>
