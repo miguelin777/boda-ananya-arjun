@@ -165,6 +165,8 @@
 
     /* Foco visible por teclado (WCAG 2.4.7) */
     #app-root a:focus-visible, #app-root button:focus-visible, #app-root summary:focus-visible, #app-root input:focus-visible, #app-root select:focus-visible { outline: 3px solid #B08D57; outline-offset: 3px; border-radius: 8px; }
+    /* Al navegar por anclas, dejar aire bajo el nav fijo (que el título no quede tapado) */
+    #app-root section[id]{ scroll-margin-top: 96px; }
 
     /* animate-reveal respeta reduced-motion */
     @media (prefers-reduced-motion: reduce){ #app-root .animate-reveal{ animation:none !important; transform:scaleY(0) !important; } }
