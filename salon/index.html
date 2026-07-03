@@ -3,6 +3,18 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Hacienda Los Encinos — Jardín & Salón de eventos</title>
   <meta name="description" content="Jardín y salón de eventos en Celaya, Guanajuato. Bodas, XV años y eventos sociales con banquete y coordinación incluida.">
+  <link rel="canonical" href="https://miguelin777.github.io/boda-ananya-arjun/salon/">
+  <meta name="theme-color" content="#3B5D50">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%233B5D50'/%3E%3Ctext%20x='50'%20y='72'%20font-size='62'%20text-anchor='middle'%20fill='%23B08D57'%20font-family='Georgia,serif'%3EL%3C/text%3E%3C/svg%3E">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Hacienda Los Encinos — Jardín &amp; Salón de eventos">
+  <meta property="og:description" content="Bodas, XV años y eventos sociales en Celaya, Gto. Jardín, salón climatizado y coordinación de principio a fin.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1200&amp;h=630&amp;fit=crop">
+  <meta property="og:url" content="https://miguelin777.github.io/boda-ananya-arjun/salon/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hacienda Los Encinos — Jardín &amp; Salón de eventos">
+  <meta name="twitter:description" content="Bodas, XV años y eventos sociales en Celaya, Gto.">
+  <meta name="twitter:image" content="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1200&amp;h=630&amp;fit=crop">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
@@ -150,6 +162,12 @@
     #app-root #mobile-menu:not(.hidden){ animation: menuIn .22s cubic-bezier(0.16,1,0.3,1) both; transform-origin: top center; }
     @keyframes menuIn{ from{ opacity:0; transform: translateY(-8px) scale(.98); } to{ opacity:1; transform:none; } }
     @media (prefers-reduced-motion: reduce){ #app-root #mobile-menu{ animation:none !important; } }
+
+    /* Foco visible por teclado (WCAG 2.4.7) */
+    #app-root a:focus-visible, #app-root button:focus-visible, #app-root summary:focus-visible, #app-root input:focus-visible, #app-root select:focus-visible { outline: 3px solid #B08D57; outline-offset: 3px; border-radius: 8px; }
+
+    /* animate-reveal respeta reduced-motion */
+    @media (prefers-reduced-motion: reduce){ #app-root .animate-reveal{ animation:none !important; transform:scaleY(0) !important; } }
   </style>
 
 <style type="text/tailwindcss">@tailwind base;
@@ -176,11 +194,12 @@
       colors: {
         'brand-primary': '#3B5D50', // Verde bosque profundo
         'brand-secondary': '#B08D57', // Dorado cálido
-        'brand-muted': '#6f7d74',
+        'gold-ink': '#8a6a34', // Dorado oscuro para texto (AA sobre claro)
+        'brand-muted': '#5a6960',
         'neutral-background': 'rgb(250, 247, 240)', // Crema
         'neutral-surface': 'rgb(238, 232, 220)',
         'text-primary': 'rgb(45, 51, 46)',
-        'text-secondary': 'rgb(111, 125, 116)',
+        'text-secondary': 'rgb(84, 96, 89)',
         'text-onPrimary': 'rgb(255, 255, 255)',
         'overlay-bg': 'rgba(45, 51, 46, 0.4)',
       },
@@ -202,10 +221,10 @@
 
   <header class="fixed top-4 left-6 right-6 z-50">
     <nav id="main-nav" class="transition-all duration-500 rounded-full px-8 py-3 flex items-center justify-between">
-      <a class="font-primary text-2xl font-bold text-white transition-colors duration-500" id="nav-logo" href="#">
+      <a class="font-primary text-2xl font-bold text-white transition-colors duration-500" id="nav-logo" href="#intro">
         Los Encinos
       </a>
-      <div class="hidden md:flex items-center gap-8">
+      <div class="hidden lg:flex items-center gap-6">
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#intro">El lugar</a>
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#venue">Espacios</a>
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#galeria">Galería</a>
@@ -213,18 +232,18 @@
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#paquetes">Paquetes</a>
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#testimonios">Reseñas</a>
       </div>
-      <a href="#contact" class="hidden md:inline-block bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
+      <a href="#contact" class="hidden lg:inline-block bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
         Cotizar
       </a>
       <!-- Botón hamburguesa (solo móvil) -->
-      <button id="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden text-white transition-colors duration-500 p-1 -mr-1">
+      <button id="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-white transition-colors duration-500 p-1 -mr-1">
         <svg id="nav-toggle-open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"></path></svg>
         <svg id="nav-toggle-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"></path></svg>
       </button>
     </nav>
 
     <!-- Menú móvil desplegable -->
-    <div id="mobile-menu" class="md:hidden hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-brand-primary/10 p-4 flex flex-col gap-1">
+    <div id="mobile-menu" class="lg:hidden hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-brand-primary/10 p-4 flex flex-col gap-1">
       <a href="#intro" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">El lugar</a>
       <a href="#venue" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Espacios</a>
       <a href="#galeria" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Galería</a>
@@ -236,9 +255,9 @@
     </div>
   </header>
 
-  <main><header class="fixed inset-0 w-full h-screen z-0 overflow-hidden select-none">
+  <main><div id="hero" class="fixed inset-0 w-full h-screen z-0 overflow-hidden select-none">
   <div class="absolute inset-0 z-0 hero-media">
-    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Jardín de eventos con kiosco y montaje de ceremonia" class="w-full h-full object-cover object-center">
+    <img src="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Jardín de eventos con kiosco y montaje de ceremonia" fetchpriority="high" decoding="async" class="w-full h-full object-cover object-center">
     <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/50 via-transparent to-black/25"></div>
   </div>
 
@@ -262,13 +281,13 @@
       </h1>
     </div>
   </div>
-</header>
+</div>
 
 <!-- Espaciador para el hero fijo -->
 <div class="h-screen w-full relative z-0 pointer-events-none"></div>
 
 <!-- Intro / Manifiesto -->
-<section class="flex flex-col items-center justify-center relative w-full py-[120px] px-12 gap-8 text-center bg-neutral-background z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]" id="intro">
+<section class="flex flex-col items-center justify-center relative w-full py-20 md:py-[120px] px-6 md:px-12 gap-8 text-center bg-neutral-background z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]" id="intro">
   <div class="flex items-center justify-center gap-[10px] w-full h-6 mb-2">
     <svg class="w-[15px] h-[15px] text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
     <svg class="w-6 h-6 text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
@@ -284,17 +303,17 @@
 </section>
 
 <!-- Espacios -->
-<section id="venue" class="flex flex-col items-center justify-center w-full pt-12 pb-[120px] px-12 bg-white">
+<section id="venue" class="flex flex-col items-center justify-center w-full pt-12 pb-[120px] px-6 md:px-12 bg-white">
   <div class="w-full max-w-7xl flex flex-col gap-12">
     <div class="flex flex-col md:flex-row items-end justify-between w-full gap-6">
       <div class="flex flex-col items-start gap-3">
         <p class="font-secondary text-brand-muted">El lugar</p>
-        <h2 class="font-primary text-5xl lg:text-6xl font-ultra text-brand-primary uppercase leading-tight tracking-tight">
+        <h2 class="font-primary text-4xl sm:text-5xl lg:text-6xl font-ultra text-brand-primary uppercase leading-tight tracking-tight">
           Hacienda Los Encinos
         </h2>
         <p class="font-secondary text-brand-primary text-lg mt-1 italic">Carr. Celaya–Cortázar km 4, Celaya, Gto.</p>
       </div>
-      <a href="https://maps.google.com" target="_blank" class="bg-brand-primary text-white px-8 py-3 rounded-full hover:bg-brand-secondary transition-all">
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=20.5236%2C-100.8158" target="_blank" rel="noopener" class="bg-brand-primary text-white px-8 py-3 rounded-full shadow-cta hover:bg-brand-secondary transition-all">
         Ver en mapa
       </a>
     </div>
@@ -305,34 +324,34 @@
         <span class="font-primary font-bold text-xl tracking-wide text-brand-primary uppercase">2 hectáreas de jardín + salón climatizado</span>
       </div>
       <div class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl" data-animation-on-scroll="" data-reveal-img>
-          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Salón principal montado para evento" class="w-full h-full object-cover">
+          <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Salón principal montado para evento" loading="lazy" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-brand-primary/10 origin-bottom animate-reveal"></div>
       </div>
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-animation-on-scroll="" data-stagger>
       <!-- Capacidad -->
-      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
         <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.65"></path></svg>
         </div>
-        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Capacidad</h5>
+        <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Capacidad</h3>
         <p class="text-brand-muted leading-relaxed">Hasta 450 invitados entre el jardín y el salón principal. Espacios flexibles lo mismo para un evento íntimo que para una gran celebración.</p>
       </div>
       <!-- Servicios -->
-      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
         <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
         </div>
-        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Servicios</h5>
+        <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Servicios</h3>
         <p class="text-brand-muted leading-relaxed">Banquete, mobiliario, iluminación, pista y coordinación incluida. ¿Ya tienes proveedores? También trabajamos con los de tu confianza.</p>
       </div>
       <!-- Ubicación -->
-      <div class="group p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
         <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
         </div>
-        <h5 class="font-primary font-bold text-2xl text-brand-primary mb-3">Ubicación</h5>
+        <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Ubicación</h3>
         <p class="text-brand-muted leading-relaxed">A 10 minutos del centro de Celaya, con amplio estacionamiento y acceso cómodo para el transporte de tus invitados.</p>
       </div>
     </div>
@@ -395,7 +414,7 @@
           <h3 class="font-primary text-4xl font-bold text-brand-primary">Bodas de ensueño</h3>
           <p class="text-brand-muted leading-relaxed">El escenario perfecto para tu gran día: ceremonia al aire libre entre los jardines y recepción de gala en el salón principal.</p>
           <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Pareja de novios en jardín" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Pareja de novios en jardín" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
           </div>
         </div>
         <div class="hidden md:flex flex-col items-center order-2 relative">
@@ -429,7 +448,7 @@
           <h3 class="font-primary text-4xl font-bold text-brand-primary">XV Años inolvidables</h3>
           <p class="text-brand-muted leading-relaxed">Una noche mágica con pista amplia, escenario y espacio de sobra para el vals, la coreografía sorpresa y todos tus invitados.</p>
           <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Celebración junto a la alberca" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+            <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Celebración junto a la alberca" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
           </div>
         </div>
       </div>
@@ -441,7 +460,7 @@
           <h3 class="font-primary text-4xl font-bold text-brand-primary">Eventos sociales y de empresa</h3>
           <p class="text-brand-muted leading-relaxed">Cenas, aniversarios, posadas y eventos corporativos con servicio de banquete, montaje profesional y coordinación de principio a fin.</p>
           <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Mesa larga montada para banquete" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Mesa larga montada para banquete" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
           </div>
         </div>
         <div class="hidden md:flex flex-col items-center order-2">
@@ -461,7 +480,7 @@
 </section>
 
 <!-- Paquetes -->
-<section id="paquetes" class="w-full py-24 px-6 md:px-12 bg-neutral-surface relative z-10 border-t border-neutral-surface">
+<section id="paquetes" class="w-full py-24 px-6 md:px-12 bg-neutral-surface relative z-10 border-t border-brand-primary/5">
   <div class="max-w-7xl mx-auto flex flex-col gap-16">
 
     <!-- Encabezado de sección (mismo patrón que Galería / Ocasiones / Reseñas) -->
@@ -479,7 +498,7 @@
       <!-- ESENCIAL -->
       <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 md:mt-6">
         <div class="mb-6">
-          <span class="text-brand-secondary font-bold tracking-[0.2em] uppercase text-xs">Esencial</span>
+          <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Esencial</span>
           <h3 class="font-primary font-ultra text-3xl text-brand-primary mt-3">Íntimo &amp; cálido</h3>
           <p class="text-brand-muted mt-2 leading-relaxed">Ideal para celebraciones de hasta 150 personas que buscan lo esencial, bien hecho.</p>
         </div>
@@ -523,14 +542,14 @@
       <div class="flex flex-col h-full p-8 md:p-10 bg-brand-primary rounded-3xl border-2 border-brand-secondary shadow-2xl shadow-brand-primary/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative md:-translate-y-6 z-10">
         <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-secondary text-white font-bold tracking-[0.15em] uppercase text-xs px-6 py-2 rounded-full shadow-lg whitespace-nowrap">Más elegido</span>
         <div class="mb-6 mt-2">
-          <span class="text-brand-secondary font-bold tracking-[0.2em] uppercase text-xs">Clásico</span>
+          <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Clásico</span>
           <h3 class="font-primary font-ultra text-3xl text-white mt-3">Boda &amp; XV de gala</h3>
-          <p class="text-white/70 mt-2 leading-relaxed">Nuestro paquete estrella para hasta 300 invitados. Todo listo para que solo disfrutes.</p>
+          <p class="text-white/80 mt-2 leading-relaxed">Nuestro paquete estrella para hasta 300 invitados. Todo listo para que solo disfrutes.</p>
         </div>
         <div class="mb-8">
-          <span class="block text-white/60 text-sm uppercase tracking-wider">Desde</span>
+          <span class="block text-white/80 text-sm uppercase tracking-wider">Desde</span>
           <span class="font-primary font-ultra text-4xl text-white leading-none">$149,900 <span class="text-2xl">MXN</span></span>
-          <span class="block text-white/60 text-sm italic mt-2">Evento base · banquete por persona aparte</span>
+          <span class="block text-white/80 text-sm italic mt-2">Evento base · banquete por persona aparte</span>
         </div>
         <ul class="flex-1 flex flex-col gap-4 mb-8">
           <li class="flex items-start gap-3">
@@ -570,7 +589,7 @@
       <!-- PREMIUM -->
       <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 md:mt-6">
         <div class="mb-6">
-          <span class="text-brand-secondary font-bold tracking-[0.2em] uppercase text-xs">Premium</span>
+          <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Premium</span>
           <h3 class="font-primary font-ultra text-3xl text-brand-primary mt-3">Experiencia completa</h3>
           <p class="text-brand-muted mt-2 leading-relaxed">Para hasta 450 invitados y celebraciones que no se olvidan. Sin límites, todo incluido.</p>
         </div>
@@ -694,7 +713,7 @@
       <!-- XV Años -->
       <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
-          <span class="text-brand-secondary font-bold tracking-[0.15em] uppercase text-xs">XV Años</span>
+          <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">XV Años</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
@@ -718,7 +737,7 @@
       <!-- Corporativo -->
       <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
-          <span class="text-brand-secondary font-bold tracking-[0.15em] uppercase text-xs">Corporativo</span>
+          <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Corporativo</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
@@ -742,7 +761,7 @@
       <!-- Boda -->
       <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
-          <span class="text-brand-secondary font-bold tracking-[0.15em] uppercase text-xs">Boda</span>
+          <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Boda</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
@@ -766,7 +785,7 @@
       <!-- Social -->
       <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
-          <span class="text-brand-secondary font-bold tracking-[0.15em] uppercase text-xs">Social</span>
+          <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Social</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
@@ -938,7 +957,7 @@
           </span>
           <div>
             <p class="font-bold text-brand-primary">Dónde estamos</p>
-            <p class="text-text-primary/80 leading-relaxed">Carr. Celaya&ndash;Cortazar km 4, Celaya, Gto.<br><span class="text-brand-muted italic">A 10 min del centro de Celaya.</span></p>
+            <p class="text-text-primary/80 leading-relaxed">Carr. Celaya&ndash;Cortázar km 4, Celaya, Gto.<br><span class="text-brand-muted italic">A 10 min del centro de Celaya.</span></p>
           </div>
         </div>
 
@@ -997,7 +1016,7 @@
             referrerpolicy="no-referrer-when-downgrade"
             src="https://www.openstreetmap.org/export/embed.html?bbox=-100.8600%2C20.5050%2C-100.7650%2C20.5450&amp;layer=mapnik&amp;marker=20.5236%2C-100.8158"></iframe>
         </div>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=Celaya%2C%20Guanajuato" target="_blank" rel="noopener" class="text-center bg-brand-primary text-white font-medium px-8 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center justify-center gap-2">
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=20.5236%2C-100.8158" target="_blank" rel="noopener" class="text-center bg-brand-primary text-white font-medium px-8 py-4 rounded-full shadow-cta hover:bg-brand-secondary transition-all inline-flex items-center justify-center gap-2">
           <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
           Cómo llegar
         </a>
@@ -1008,7 +1027,7 @@
     <!-- Ancho completo · Formulario a WhatsApp -->
     <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-lg p-8 md:p-12" data-animation-on-scroll="">
       <div class="max-w-3xl mx-auto text-center mb-8">
-        <span class="text-brand-secondary font-bold tracking-[0.2em] uppercase text-xs">Cotización rápida</span>
+        <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Cotización rápida</span>
         <h3 class="font-primary font-ultra text-3xl md:text-4xl text-brand-primary mt-3">Cuéntanos de tu evento</h3>
         <p class="text-brand-muted italic mt-2">Llena estos datos y te contactamos por WhatsApp con la disponibilidad y el paquete ideal.</p>
       </div>
@@ -1016,7 +1035,7 @@
       <form id="cotiza-form" action="https://wa.me/524611234567" method="get" target="_blank" class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-5">
         <div class="flex flex-col gap-1.5">
           <label for="cf-nombre" class="text-sm font-bold text-brand-primary">Tu nombre</label>
-          <input id="cf-nombre" name="nombre" type="text" placeholder="Ej. Ana López" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+          <input id="cf-nombre" name="nombre" type="text" placeholder="Ej. Ana López" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
         </div>
 
         <div class="flex flex-col gap-1.5">
@@ -1037,7 +1056,7 @@
 
         <div class="flex flex-col gap-1.5">
           <label for="cf-invitados" class="text-sm font-bold text-brand-primary">No. de invitados</label>
-          <input id="cf-invitados" name="invitados" type="number" min="1" placeholder="Ej. 200" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted/60 focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
+          <input id="cf-invitados" name="invitados" type="number" min="1" placeholder="Ej. 200" class="bg-white border border-brand-primary/20 rounded-xl px-4 py-3 text-text-primary placeholder:text-brand-muted focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 transition-all">
         </div>
 
         <div class="md:col-span-2 flex flex-col sm:flex-row items-center justify-center gap-4 mt-2">
@@ -1064,7 +1083,7 @@
         <!-- Marca -->
         <div class="flex flex-col gap-4">
           <h3 class="font-primary text-3xl">Hacienda Los Encinos</h3>
-          <p class="text-white/70 leading-relaxed text-sm">Jardín y salón de eventos en Celaya, Guanajuato. Bodas, XV años y celebraciones inolvidables entre jardines y cantera.</p>
+          <p class="text-white/80 leading-relaxed text-sm">Jardín y salón de eventos en Celaya, Guanajuato. Bodas, XV años y celebraciones inolvidables entre jardines y cantera.</p>
           <div class="flex items-center gap-3 mt-1">
             <a href="#" aria-label="Instagram de Hacienda Los Encinos" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-secondary transition-colors">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.17.05 1.8.25 2.23.42.56.22.96.48 1.38.9.42.42.68.82.9 1.38.17.42.37 1.06.42 2.23.06 1.27.07 1.65.07 4.85s0 3.58-.07 4.85c-.05 1.17-.25 1.8-.42 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.17-1.06.37-2.23.42-1.27.06-1.65.07-4.85.07s-3.58 0-4.85-.07c-1.17-.05-1.8-.25-2.23-.42-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.17-.42-.37-1.06-.42-2.23C2.21 15.58 2.2 15.2 2.2 12s0-3.58.07-4.85c.05-1.17.25-1.8.42-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.17 1.06-.37 2.23-.42C8.42 2.21 8.8 2.2 12 2.2zm0 1.62c-3.15 0-3.52.01-4.76.07-.9.04-1.38.19-1.71.32-.43.17-.74.37-1.06.69-.32.32-.52.63-.69 1.06-.13.33-.28.81-.32 1.71-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.04.9.19 1.38.32 1.71.17.43.37.74.69 1.06.32.32.63.52 1.06.69.33.13.81.28 1.71.32 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c.9-.04 1.38-.19 1.71-.32.43-.17.74-.37 1.06-.69.32-.32.52-.63.69-1.06.13-.33.28-.81.32-1.71.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.04-.9-.19-1.38-.32-1.71-.17-.43-.37-.74-.69-1.06-.32-.32-.63-.52-1.06-.69-.33-.13-.81-.28-1.71-.32-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.42 5.42 0 110 10.84 5.42 5.42 0 010-10.84zm0 8.94a3.52 3.52 0 100-7.04 3.52 3.52 0 000 7.04zm6.9-9.15a1.27 1.27 0 11-2.54 0 1.27 1.27 0 012.54 0z"></path></svg>
@@ -1077,34 +1096,34 @@
 
         <!-- Explora -->
         <div class="flex flex-col gap-3">
-          <h4 class="font-primary text-lg text-brand-secondary mb-1">Explora</h4>
-          <a href="#intro" class="text-white/75 hover:text-white transition-colors text-sm w-fit">El lugar</a>
-          <a href="#venue" class="text-white/75 hover:text-white transition-colors text-sm w-fit">Espacios</a>
-          <a href="#galeria" class="text-white/75 hover:text-white transition-colors text-sm w-fit">Galería</a>
-          <a href="#timeline" class="text-white/75 hover:text-white transition-colors text-sm w-fit">Ocasiones</a>
-          <a href="#paquetes" class="text-white/75 hover:text-white transition-colors text-sm w-fit">Paquetes</a>
-          <a href="#testimonios" class="text-white/75 hover:text-white transition-colors text-sm w-fit">Reseñas</a>
+          <h4 class="font-primary text-lg text-[#e0c68a] mb-1">Explora</h4>
+          <a href="#intro" class="text-white/85 hover:text-white transition-colors text-sm w-fit">El lugar</a>
+          <a href="#venue" class="text-white/85 hover:text-white transition-colors text-sm w-fit">Espacios</a>
+          <a href="#galeria" class="text-white/85 hover:text-white transition-colors text-sm w-fit">Galería</a>
+          <a href="#timeline" class="text-white/85 hover:text-white transition-colors text-sm w-fit">Ocasiones</a>
+          <a href="#paquetes" class="text-white/85 hover:text-white transition-colors text-sm w-fit">Paquetes</a>
+          <a href="#testimonios" class="text-white/85 hover:text-white transition-colors text-sm w-fit">Reseñas</a>
         </div>
 
         <!-- Contacto -->
         <div class="flex flex-col gap-3">
-          <h4 class="font-primary text-lg text-brand-secondary mb-1">Contacto</h4>
-          <p class="text-white/75 text-sm leading-relaxed">Carr. Celaya&ndash;Cortázar km 4,<br>Celaya, Gto.</p>
-          <a href="tel:+524611234567" class="text-white/75 hover:text-white transition-colors text-sm w-fit">461 123 4567</a>
-          <a href="mailto:eventos@losencinos.mx" class="text-white/75 hover:text-white transition-colors text-sm w-fit">eventos@losencinos.mx</a>
+          <h4 class="font-primary text-lg text-[#e0c68a] mb-1">Contacto</h4>
+          <p class="text-white/85 text-sm leading-relaxed">Carr. Celaya&ndash;Cortázar km 4,<br>Celaya, Gto.</p>
+          <a href="tel:+524611234567" class="text-white/85 hover:text-white transition-colors text-sm w-fit">461 123 4567</a>
+          <a href="mailto:eventos@losencinos.mx" class="text-white/85 hover:text-white transition-colors text-sm w-fit">eventos@losencinos.mx</a>
         </div>
 
         <!-- Horarios + CTA -->
         <div class="flex flex-col gap-3">
-          <h4 class="font-primary text-lg text-brand-secondary mb-1">Horarios</h4>
-          <p class="text-white/75 text-sm leading-relaxed">Lun&ndash;Dom · 10:00&ndash;19:00<br><span class="text-white/50 italic">Visitas con cita previa.</span></p>
+          <h4 class="font-primary text-lg text-[#e0c68a] mb-1">Horarios</h4>
+          <p class="text-white/85 text-sm leading-relaxed">Lun&ndash;Dom · 10:00&ndash;19:00<br><span class="text-white/70 italic">Visitas con cita previa.</span></p>
           <a href="#contact" class="mt-2 inline-flex items-center justify-center bg-white text-brand-primary font-medium px-6 py-3 rounded-full hover:bg-brand-secondary hover:text-white transition-all text-sm w-fit">Agenda tu visita</a>
         </div>
 
       </div>
 
       <!-- Barra inferior -->
-      <div class="mt-14 pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-3 text-white/60 text-sm text-center">
+      <div class="mt-14 pt-8 border-t border-white/15 flex flex-col md:flex-row items-center justify-between gap-3 text-white/80 text-sm text-center">
         <p>© 2026 Hacienda Los Encinos · Jardín &amp; Salón de eventos</p>
         <p>Celaya, Guanajuato, México</p>
       </div>
@@ -1145,7 +1164,7 @@
       /* 1. HERO: settle del H1 + tags + rule, y ref del media */
       let heroMedia = null;
       (function heroSetup(){
-        const heroHeader = document.querySelector('main > header');
+        const heroHeader = document.getElementById('hero');
         if(!heroHeader) return;
         const h1 = heroHeader.querySelector('h1');
         if(h1 && !REDUCE){
@@ -1302,8 +1321,10 @@
           navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
           if (iconOpen) iconOpen.classList.toggle('hidden', open);
           if (iconClose) iconClose.classList.toggle('hidden', !open);
-          /* al abrir, forzar nav sólido para que el icono y el panel se lean; al cerrar, restaurar según scroll */
-          if (open) { navFrame(101); } else { navFrame(window.scrollY); }
+          document.documentElement.classList.toggle('overflow-hidden', open);
+          /* al abrir, forzar nav sólido y mover foco al panel; al cerrar, restaurar y devolver foco */
+          if (open) { navFrame(101); const f = mobileMenu.querySelector('a'); if (f) f.focus(); }
+          else { navFrame(window.scrollY); navToggle.focus(); }
         };
         navToggle.addEventListener('click', () => setMenu(mobileMenu.classList.contains('hidden')));
         mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
