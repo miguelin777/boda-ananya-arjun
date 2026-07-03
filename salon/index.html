@@ -139,6 +139,17 @@
     @media (prefers-reduced-motion: reduce){
       #app-root .faq-chevron { transition: none !important; }
     }
+
+    /* Nav sobre el hero (transparente): sombra para legibilidad de logo/enlaces/hamburguesa
+       sobre imágenes claras; desaparece al hacer scroll (cuando el nav se vuelve blanco). */
+    #app-root #main-nav:not(.backdrop-blur-xl) #nav-logo,
+    #app-root #main-nav:not(.backdrop-blur-xl) .nav-link{ text-shadow: 0 1px 8px rgba(0,0,0,.45); }
+    #app-root #main-nav:not(.backdrop-blur-xl) #nav-toggle{ background: rgba(0,0,0,.22); border-radius: 9999px; filter: drop-shadow(0 1px 4px rgba(0,0,0,.35)); }
+
+    /* Menú móvil: animación de entrada al abrir */
+    #app-root #mobile-menu:not(.hidden){ animation: menuIn .22s cubic-bezier(0.16,1,0.3,1) both; transform-origin: top center; }
+    @keyframes menuIn{ from{ opacity:0; transform: translateY(-8px) scale(.98); } to{ opacity:1; transform:none; } }
+    @media (prefers-reduced-motion: reduce){ #app-root #mobile-menu{ animation:none !important; } }
   </style>
 
 <style type="text/tailwindcss">@tailwind base;
@@ -202,10 +213,27 @@
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#paquetes">Paquetes</a>
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#testimonios">Reseñas</a>
       </div>
-      <a href="#contact" class="bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
+      <a href="#contact" class="hidden md:inline-block bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
         Cotizar
       </a>
+      <!-- Botón hamburguesa (solo móvil) -->
+      <button id="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" class="md:hidden text-white transition-colors duration-500 p-1 -mr-1">
+        <svg id="nav-toggle-open" class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16"></path></svg>
+        <svg id="nav-toggle-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"></path></svg>
+      </button>
     </nav>
+
+    <!-- Menú móvil desplegable -->
+    <div id="mobile-menu" class="md:hidden hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-brand-primary/10 p-4 flex flex-col gap-1">
+      <a href="#intro" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">El lugar</a>
+      <a href="#venue" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Espacios</a>
+      <a href="#galeria" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Galería</a>
+      <a href="#timeline" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Ocasiones</a>
+      <a href="#paquetes" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Paquetes</a>
+      <a href="#testimonios" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Reseñas</a>
+      <a href="#faq" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Preguntas</a>
+      <a href="#contact" class="mobile-link mt-2 text-center bg-brand-primary text-white font-medium px-6 py-3 rounded-full shadow-cta hover:bg-brand-secondary transition-all">Cotizar</a>
+    </div>
   </header>
 
   <main><header class="fixed inset-0 w-full h-screen z-0 overflow-hidden select-none">
@@ -1042,6 +1070,8 @@
       const nav = document.getElementById('main-nav');
       const logo = document.getElementById('nav-logo');
       const navLinks = document.querySelectorAll('.nav-link');
+      const navToggle = document.getElementById('nav-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
 
       /* ===== Reveals base (IntersectionObserver existente) ===== */
       const observer = new IntersectionObserver((entries) => {
@@ -1108,10 +1138,12 @@
         if(y > 100){
           nav.classList.add('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
           if(logo) logo.classList.replace('text-white','text-brand-primary');
+          if(navToggle) navToggle.classList.replace('text-white','text-brand-primary');
           navLinks.forEach(l => l.classList.replace('text-white/90','text-text-primary'));
         } else {
           nav.classList.remove('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
           if(logo) logo.classList.replace('text-brand-primary','text-white');
+          if(navToggle) navToggle.classList.replace('text-brand-primary','text-white');
           navLinks.forEach(l => l.classList.replace('text-text-primary','text-white/90'));
         }
       }
@@ -1210,6 +1242,27 @@
           const url = 'https://wa.me/524611234567?text=' + encodeURIComponent(msg);
           const win = window.open(url, '_blank');
           if (!win) window.location.href = url;
+        });
+      }
+
+      /* ===== Menú móvil (hamburguesa) ===== */
+      if (navToggle && mobileMenu) {
+        const iconOpen = document.getElementById('nav-toggle-open');
+        const iconClose = document.getElementById('nav-toggle-close');
+        const setMenu = (open) => {
+          mobileMenu.classList.toggle('hidden', !open);
+          navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          navToggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+          if (iconOpen) iconOpen.classList.toggle('hidden', open);
+          if (iconClose) iconClose.classList.toggle('hidden', !open);
+          /* al abrir, forzar nav sólido para que el icono y el panel se lean; al cerrar, restaurar según scroll */
+          if (open) { navFrame(101); } else { navFrame(window.scrollY); }
+        };
+        navToggle.addEventListener('click', () => setMenu(mobileMenu.classList.contains('hidden')));
+        mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
+        document.addEventListener('click', (e) => {
+          if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(e.target) && !navToggle.contains(e.target)) setMenu(false);
         });
       }
     });
