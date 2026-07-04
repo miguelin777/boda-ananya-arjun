@@ -17,7 +17,7 @@
   <meta name="twitter:image" content="https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&amp;w=1200&amp;h=630&amp;fit=crop">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&amp;family=Libre+Caslon+Display&amp;family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&amp;family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&amp;display=swap" rel="stylesheet">
 
   <style>
     .animate-on-scroll-hidden {
@@ -38,6 +38,8 @@
        ============================================================ */
     :root{
       --ease-cine: cubic-bezier(0.16, 1, 0.3, 1);
+      --e-mask: cubic-bezier(0.77, 0, 0.175, 1);
+      --e-power: cubic-bezier(0.19, 1, 0.22, 1);
       --t-fast: .5s;
       --t-base: .9s;
       --t-slow: 1.4s;
@@ -170,6 +172,53 @@
 
     /* animate-reveal respeta reduced-motion */
     @media (prefers-reduced-motion: reduce){ #app-root .animate-reveal{ animation:none !important; transform:scaleY(0) !important; } }
+
+    /* ============================================================
+       AWWWARDS PACK — tipografia cinetica, reveals direccionales,
+       marquee, magnetico, progreso, hero fade. Solo transform/opacity.
+       ============================================================ */
+    #app-root .font-primary{ font-optical-sizing:auto; }
+
+    /* Reveal por mascara de linea en titulos */
+    .mask-line{ display:block; overflow:hidden; padding-bottom:.08em; }
+    .mask-line > .inner{ display:block; transform:translateY(110%); transition:transform var(--t-slow) var(--e-mask); }
+    .animate-on-scroll-visible .mask-line > .inner{ transform:translateY(0); }
+
+    /* Reveals direccionales (sistema independiente) */
+    #app-root [data-reveal]{ --rx:0px; --ry:34px; opacity:0; transform:translate3d(var(--rx),var(--ry),0); transition:opacity var(--t-base) var(--ease-cine), transform var(--t-base) var(--ease-cine); }
+    #app-root [data-reveal="left"]{ --rx:-46px; --ry:0px; }
+    #app-root [data-reveal="right"]{ --rx:46px; --ry:0px; }
+    #app-root [data-reveal].is-in{ opacity:1; transform:none; }
+
+    /* Marquee tipografico en outline */
+    .marquee{ overflow:hidden; white-space:nowrap; border-block:1px solid rgba(59,93,80,.14); padding:1.15rem 0; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); }
+    .marquee__track{ display:inline-flex; align-items:center; will-change:transform; animation:marq 38s linear infinite; }
+    .marquee:hover .marquee__track{ animation-play-state:paused; }
+    .marquee__item{ font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(1.7rem,5vw,3.1rem); letter-spacing:-.02em; padding:0 1.5rem; -webkit-text-stroke:1px #B08D57; color:transparent; }
+    .marquee__item.solid{ -webkit-text-stroke:0; color:#B08D57; }
+    @keyframes marq{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+    /* Boton magnetico */
+    .magnetic{ will-change:transform; transition:transform var(--t-fast) var(--ease-cine); }
+    .magnetic > span{ position:relative; z-index:1; display:inline-flex; align-items:center; gap:.5rem; transition:transform var(--t-fast) var(--ease-cine); }
+
+    /* Barra de progreso de scroll */
+    #scroll-progress{ position:fixed; top:0; left:0; height:2px; width:100%; z-index:70; transform:scaleX(0); transform-origin:0 50%; background:#B08D57; will-change:transform; pointer-events:none; }
+
+    /* Hero: fade + subida del contenido al bajar */
+    #hero-content{ opacity:var(--hero-fade,1); transform:translateY(calc((1 - var(--hero-fade,1)) * 42px)); }
+
+    /* Contadores: ancho estable */
+    .stat-num{ font-variant-numeric:tabular-nums; }
+
+    @media (prefers-reduced-motion: reduce){
+      .mask-line > .inner{ transform:none !important; }
+      #app-root [data-reveal]{ opacity:1 !important; transform:none !important; }
+      .marquee__track{ animation:none !important; }
+      .magnetic, .magnetic > span{ transform:none !important; }
+      #hero-content{ opacity:1 !important; transform:none !important; }
+    }
+
   </style>
 
 <style type="text/tailwindcss">@tailwind base;
@@ -178,7 +227,10 @@
 
 @layer base {
   .font-ultra {
-    font-weight: 900;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    font-stretch: 112%;
+    font-optical-sizing: auto;
   }
 }
 
@@ -206,11 +258,12 @@
         'overlay-bg': 'rgba(45, 51, 46, 0.4)',
       },
       fontFamily: {
-        'primary': ['"Fraunces"', 'serif'],
-        'secondary': ['"Libre Caslon Text"', 'serif'],
+        'primary': ['"Bricolage Grotesque"', 'sans-serif'],
+        'secondary': ['"Newsreader"', 'serif'],
+        'accent': ['"Newsreader"', 'serif'],
       },
       borderRadius: {
-        'lg': '40px',
+        'lg': '14px',
       },
       boxShadow: {
         'cta': '0 4px 15px rgba(59, 93, 80, 0.25)',
@@ -244,6 +297,7 @@
 </head>
 
 <body id="app-root" class="font-secondary bg-neutral-background text-text-primary overflow-x-hidden">
+  <div id="scroll-progress"></div>
 
   <header class="fixed top-4 left-6 right-6 z-50">
     <nav id="main-nav" class="transition-all duration-500 rounded-full px-8 py-3 flex items-center justify-between">
@@ -258,8 +312,8 @@
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#paquetes">Paquetes</a>
         <a class="font-medium text-white/90 hover:text-white transition-colors nav-link" href="#testimonios">Reseñas</a>
       </div>
-      <a href="#contact" class="hidden lg:inline-block bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
-        Cotizar
+      <a href="#contact" class="magnetic hidden lg:inline-block bg-brand-primary text-white font-medium px-6 py-2 rounded-full shadow-cta text-sm border border-white/20">
+        <span>Cotizar</span>
       </a>
       <!-- Botón hamburguesa (solo móvil) -->
       <button id="nav-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu" class="lg:hidden text-white transition-colors duration-500 p-1 -mr-1">
@@ -269,7 +323,7 @@
     </nav>
 
     <!-- Menú móvil desplegable -->
-    <div id="mobile-menu" class="lg:hidden hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-xl rounded-3xl shadow-xl border border-brand-primary/10 p-4 flex flex-col gap-1">
+    <div id="mobile-menu" class="lg:hidden hidden absolute left-0 right-0 top-full mt-3 bg-white/95 backdrop-blur-xl rounded-3xl shadow-sm border border-brand-primary/10 p-4 flex flex-col gap-1">
       <a href="#intro" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">El lugar</a>
       <a href="#venue" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Espacios</a>
       <a href="#galeria" class="mobile-link block px-4 py-3 rounded-xl font-medium text-text-primary hover:bg-brand-primary/5 hover:text-brand-primary transition-colors">Galería</a>
@@ -287,7 +341,7 @@
     <div class="absolute inset-0 bg-gradient-to-t from-brand-primary/50 via-transparent to-black/25"></div>
   </div>
 
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-24 gap-4" data-animation-on-scroll="">
+  <div id="hero-content" class="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-end pb-24 gap-4" data-animation-on-scroll="">
     <div class="w-full flex flex-col md:flex-row justify-between items-center border-b border-white/40 pb-4">
       <div class="flex-1 text-left">
         <p class="font-primary text-[20px] font-bold text-white uppercase tracking-wider">
@@ -314,16 +368,12 @@
 
 <!-- Intro / Manifiesto -->
 <section class="flex flex-col items-center justify-center relative w-full py-20 md:py-[120px] px-6 md:px-12 gap-8 text-center bg-neutral-background z-10 shadow-[0_-20px_50px_rgba(0,0,0,0.1)]" id="intro">
-  <div class="flex items-center justify-center gap-[10px] w-full h-6 mb-2">
-    <svg class="w-[15px] h-[15px] text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
-    <svg class="w-6 h-6 text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
-    <svg class="w-[15px] h-[15px] text-brand-secondary" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z"></path></svg>
-  </div>
+  <p class="font-primary text-[11px] tracking-[0.42em] uppercase text-brand-secondary mb-1">Hacienda de eventos &middot; Bajío</p>
 
   <div class="max-w-[800px] w-full" data-animation-on-scroll="">
-    <h2 class="font-primary font-ultra text-[34px] lg:text-[42px] leading-[1.3] text-brand-primary">
+    <h2 class="font-primary text-[30px] lg:text-[40px] font-semibold leading-[1.28] tracking-[-0.02em] text-brand-primary">
       Un lugar hecho para celebrar.
-      <span class="text-brand-muted italic">Desde bodas de ensueño hasta XV años inolvidables, cada evento en Los Encinos se vive entre jardines, cantera y la calidez de una hacienda del Bajío.</span>
+      <span class="font-accent font-normal text-brand-muted italic">Desde bodas de ensueño hasta XV años inolvidables, cada evento en Los Encinos se vive entre jardines, cantera y la calidez de una hacienda del Bajío.</span>
     </h2>
   </div>
 </section>
@@ -339,8 +389,8 @@
         </h2>
         <p class="font-secondary text-brand-primary text-lg mt-1 italic">Carr. Celaya–Cortázar km 4, Celaya, Gto.</p>
       </div>
-      <a href="https://www.google.com/maps/search/?api=1&amp;query=20.5236%2C-100.8158" target="_blank" rel="noopener" class="bg-brand-primary text-white px-8 py-3 rounded-full shadow-cta hover:bg-brand-secondary transition-all">
-        Ver en mapa
+      <a href="https://www.google.com/maps/search/?api=1&amp;query=20.5236%2C-100.8158" target="_blank" rel="noopener" class="magnetic bg-brand-primary text-white px-8 py-3 rounded-full shadow-cta hover:bg-brand-secondary transition-all">
+        <span>Ver en mapa</span>
       </a>
     </div>
 
@@ -349,7 +399,7 @@
         <svg class="w-4 h-4 text-brand-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"></path></svg>
         <span class="font-primary font-bold text-xl tracking-wide text-brand-primary uppercase">2 hectáreas de jardín + salón climatizado</span>
       </div>
-      <div class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl" data-animation-on-scroll="" data-reveal-img>
+      <div class="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-sm" data-animation-on-scroll="" data-reveal-img>
           <img src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?q=80&amp;w=1600&amp;auto=format&amp;fit=crop" alt="Salón principal montado para evento" loading="lazy" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-brand-primary/10 origin-bottom animate-reveal"></div>
       </div>
@@ -357,26 +407,20 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-animation-on-scroll="" data-stagger>
       <!-- Capacidad -->
-      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
-        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a4 4 0 10-3-6.65"></path></svg>
-        </div>
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 border border-brand-primary/5 flex flex-col items-center text-center">
+        <span class="font-primary text-5xl md:text-6xl font-ultra text-brand-secondary/25 mb-3 leading-none">I</span>
         <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Capacidad</h3>
         <p class="text-brand-muted leading-relaxed">Hasta 450 invitados entre el jardín y el salón principal. Espacios flexibles lo mismo para un evento íntimo que para una gran celebración.</p>
       </div>
       <!-- Servicios -->
-      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
-        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
-        </div>
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 border border-brand-primary/5 flex flex-col items-center text-center">
+        <span class="font-primary text-5xl md:text-6xl font-ultra text-brand-secondary/25 mb-3 leading-none">II</span>
         <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Servicios</h3>
         <p class="text-brand-muted leading-relaxed">Banquete, mobiliario, iluminación, pista y coordinación incluida. ¿Ya tienes proveedores? También trabajamos con los de tu confianza.</p>
       </div>
       <!-- Ubicación -->
-      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 hover:shadow-xl hover:-translate-y-2 border border-brand-primary/5 flex flex-col items-center text-center">
-        <div class="w-16 h-16 bg-brand-primary text-white rounded-full flex items-center justify-center mb-6 shadow-lg shadow-brand-primary/20">
-          <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        </div>
+      <div class="group p-8 md:p-10 bg-neutral-surface rounded-3xl transition-all duration-500 border border-brand-primary/5 flex flex-col items-center text-center">
+        <span class="font-primary text-5xl md:text-6xl font-ultra text-brand-secondary/25 mb-3 leading-none">III</span>
         <h3 class="font-primary font-bold text-2xl text-brand-primary mb-3">Ubicación</h3>
         <p class="text-brand-muted leading-relaxed">A 10 minutos del centro de Celaya, con amplio estacionamiento y acceso cómodo para el transporte de tus invitados.</p>
       </div>
@@ -387,36 +431,43 @@
 <!-- Galería -->
 <section id="galeria" class="w-full py-24 px-6 md:px-12 bg-neutral-background relative z-10">
   <div class="max-w-7xl mx-auto flex flex-col gap-12">
-    <div class="text-center" data-animation-on-scroll="">
+    <div class="text-left" data-animation-on-scroll="">
       <div class="inline-block mb-4 overflow-hidden">
         <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">01</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Galería</span></span>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Momentos en Los Encinos</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Jardín, cantera y luz de tarde. El lugar habla por sí solo.</p>
+      <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Momentos en Los Encinos</h2>
+      <p class="max-w-2xl text-lg text-brand-muted italic">Jardín, cantera y luz de tarde. El lugar habla por sí solo.</p>
     </div>
 
     <div class="grid grid-cols-2 lg:grid-cols-3 auto-rows-[190px] md:auto-rows-[240px] gap-4" data-animation-on-scroll="">
-      <div class="overflow-hidden rounded-2xl shadow-lg group col-span-2 row-span-2">
+      <div class="overflow-hidden rounded-2xl shadow-sm group col-span-2 row-span-2">
         <img src="https://images.unsplash.com/photo-1522413452208-996ff3f3e740?q=80&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Mesa montada con velas y follaje" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
-      <div class="overflow-hidden rounded-2xl shadow-lg group">
+      <div class="overflow-hidden rounded-2xl shadow-sm group">
         <img src="https://images.unsplash.com/photo-1509610973147-232dfea52a97?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Pareja celebrando al aire libre" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
-      <div class="overflow-hidden rounded-2xl shadow-lg group">
+      <div class="overflow-hidden rounded-2xl shadow-sm group">
         <img src="https://images.unsplash.com/photo-1464047736614-af63643285bf?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Luces colgantes creando ambiente" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
-      <div class="overflow-hidden rounded-2xl shadow-lg group">
+      <div class="overflow-hidden rounded-2xl shadow-sm group">
         <img src="https://images.unsplash.com/photo-1478146059778-26028b07395a?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Mesa de postres montada" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
-      <div class="overflow-hidden rounded-2xl shadow-lg group">
+      <div class="overflow-hidden rounded-2xl shadow-sm group">
         <img src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Platillo del banquete" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
-      <div class="overflow-hidden rounded-2xl shadow-lg group col-span-2 lg:col-span-1">
+      <div class="overflow-hidden rounded-2xl shadow-sm group col-span-2 lg:col-span-1">
         <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Globos de colores en la celebración" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
       </div>
     </div>
   </div>
 </section>
+
+<!-- Marquee editorial -->
+<div class="relative z-10 bg-neutral-background marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">Bodas</span><span class="marquee__item solid">&#9670;</span><span class="marquee__item">XV Años</span><span class="marquee__item solid">&#9670;</span><span class="marquee__item">Corporativo</span><span class="marquee__item solid">&#9670;</span><span class="marquee__item">Aniversarios</span><span class="marquee__item solid">&#9670;</span>
+  </div>
+</div>
 
 <!-- Ocasiones -->
 <section id="timeline" class="w-full py-24 px-6 md:px-12 bg-white relative z-10 border-t border-brand-primary/5">
@@ -424,13 +475,13 @@
     <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6" data-animation-on-scroll="">
       <div>
         <span class="inline-flex items-center gap-3 align-middle mb-4"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">02</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Ocasiones</span></span>
-        <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em]">Para cada celebración</h2>
+        <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em]">Para cada celebración</h2>
       </div>
       <p class="md:max-w-[16rem] md:text-right text-brand-muted italic leading-relaxed">Un mismo lugar, tres formas de celebrar.</p>
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" data-animation-on-scroll="" data-stagger>
       <article class="group flex flex-col">
-        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+        <div class="relative overflow-hidden rounded-2xl shadow-sm">
           <div class="aspect-[4/5] w-full bg-neutral-surface">
             <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Boda en el jardín de Los Encinos" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
           </div>
@@ -445,7 +496,7 @@
       </article>
 
       <article class="group flex flex-col">
-        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+        <div class="relative overflow-hidden rounded-2xl shadow-sm">
           <div class="aspect-[4/5] w-full bg-neutral-surface">
             <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Celebración de XV años" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
           </div>
@@ -460,7 +511,7 @@
       </article>
 
       <article class="group flex flex-col">
-        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+        <div class="relative overflow-hidden rounded-2xl shadow-sm">
           <div class="aspect-[4/5] w-full bg-neutral-surface">
             <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Mesa larga montada para banquete" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
           </div>
@@ -482,19 +533,19 @@
   <div class="max-w-7xl mx-auto flex flex-col gap-16">
 
     <!-- Encabezado de sección (mismo patrón que Galería / Ocasiones / Reseñas) -->
-    <div class="text-center" data-animation-on-scroll="">
+    <div class="text-left" data-animation-on-scroll="">
       <div class="inline-block mb-4 overflow-hidden">
         <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">03</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Paquetes</span></span>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Elige cómo celebrar</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Tres formas de vivir tu evento en Los Encinos. Todos incluyen jardín, salón climatizado y coordinación de principio a fin.</p>
+      <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Elige cómo celebrar</h2>
+      <p class="max-w-2xl text-lg text-brand-muted italic">Tres formas de vivir tu evento en Los Encinos. Todos incluyen jardín, salón climatizado y coordinación de principio a fin.</p>
     </div>
 
     <!-- Tres tarjetas de paquete -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch" data-animation-on-scroll="">
 
       <!-- ESENCIAL -->
-      <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 md:mt-6">
+      <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-sm transition-all duration-500 md:mt-6">
         <div class="mb-6">
           <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Esencial</span>
           <h3 class="font-primary font-ultra text-3xl text-brand-primary mt-3">Íntimo &amp; cálido</h3>
@@ -537,10 +588,9 @@
       </div>
 
       <!-- CLÁSICO (DESTACADO · Más elegido) -->
-      <div class="flex flex-col h-full p-8 md:p-10 bg-brand-primary rounded-3xl border-2 border-brand-secondary shadow-2xl shadow-brand-primary/30 transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 relative md:-translate-y-6 z-10">
-        <span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-secondary text-white font-bold tracking-[0.15em] uppercase text-xs px-6 py-2 rounded-full shadow-lg whitespace-nowrap">Más elegido</span>
+      <div class="flex flex-col h-full p-8 md:p-10 bg-brand-primary rounded-3xl border-2 border-brand-secondary shadow-sm shadow-brand-primary/30 transition-all duration-500 relative z-10">
         <div class="mb-6 mt-2">
-          <span class="text-[#ead9b0] font-bold tracking-[0.2em] uppercase text-xs">Clásico</span>
+          <span class="text-[#ead9b0] font-bold tracking-[0.2em] uppercase text-xs">Clásico &middot; Recomendado</span>
           <h3 class="font-primary font-ultra text-3xl text-white mt-3">Boda &amp; XV de gala</h3>
           <p class="text-white/80 mt-2 leading-relaxed">Nuestro paquete estrella para hasta 300 invitados. Todo listo para que solo disfrutes.</p>
         </div>
@@ -585,7 +635,7 @@
       </div>
 
       <!-- PREMIUM -->
-      <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-lg transition-all duration-500 hover:shadow-xl hover:-translate-y-2 md:mt-6">
+      <div class="flex flex-col h-full p-8 md:p-10 bg-white rounded-3xl border border-brand-primary/5 shadow-sm transition-all duration-500 md:mt-6">
         <div class="mb-6">
           <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Premium</span>
           <h3 class="font-primary font-ultra text-3xl text-brand-primary mt-3">Experiencia completa</h3>
@@ -646,16 +696,16 @@
   <div class="max-w-7xl mx-auto flex flex-col gap-16">
 
     <!-- Encabezado de sección (mismo patrón que Galería / Ocasiones) -->
-    <div class="text-center" data-animation-on-scroll="">
+    <div class="text-left" data-animation-on-scroll="">
       <div class="inline-block mb-4 overflow-hidden">
         <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">04</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Reseñas</span></span>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Lo que dicen nuestras familias</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Cientos de bodas, XV años y celebraciones que hoy son un recuerdo para toda la vida.</p>
+      <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Lo que dicen nuestras familias</h2>
+      <p class="max-w-2xl text-lg text-brand-muted italic">Cientos de bodas, XV años y celebraciones que hoy son un recuerdo para toda la vida.</p>
     </div>
 
     <!-- Testimonio destacado -->
-    <figure class="relative bg-neutral-surface rounded-3xl border border-brand-primary/5 shadow-xl px-8 py-14 md:px-20 md:py-20 text-center overflow-hidden" data-animation-on-scroll="">
+    <figure class="relative bg-neutral-surface rounded-3xl border border-brand-primary/5 shadow-sm px-8 py-14 md:px-20 md:py-20 text-center overflow-hidden" data-animation-on-scroll="">
       <!-- Comilla decorativa dorada -->
       <span aria-hidden="true" class="font-primary select-none pointer-events-none absolute -top-6 left-6 md:top-2 md:left-12 text-brand-secondary/20 leading-none" style="font-size: clamp(9rem, 18vw, 16rem);">&ldquo;</span>
 
@@ -676,7 +726,7 @@
       </blockquote>
 
       <figcaption class="relative flex flex-col items-center gap-4 mt-10">
-        <div class="w-16 h-16 rounded-full bg-brand-primary text-white flex items-center justify-center shadow-lg shadow-brand-primary/20" aria-hidden="true">
+        <div class="w-16 h-16 rounded-full bg-brand-primary text-white flex items-center justify-center shadow-sm shadow-brand-primary/20" aria-hidden="true">
           <span class="font-primary font-bold text-xl tracking-wide">AD</span>
         </div>
         <div class="leading-tight">
@@ -689,18 +739,18 @@
     <!-- Barra de confianza (prueba social cuantitativa) -->
     <div class="bg-neutral-surface rounded-3xl border border-brand-primary/5 px-8 py-12 md:py-14 grid grid-cols-1 sm:grid-cols-3 gap-10 md:gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-brand-primary/10" data-animation-on-scroll="">
       <div class="flex flex-col items-center justify-center gap-2 pt-8 sm:pt-0 first:pt-0">
-        <span class="font-primary font-ultra text-brand-primary leading-none" style="font-size: clamp(3rem, 7vw, 4.5rem);">+500</span>
+        <span class="font-primary font-ultra text-brand-primary leading-none stat-num" style="font-size: clamp(3rem, 7vw, 4.5rem);" data-count="500" data-prefix="+">+500</span>
         <span class="text-brand-muted uppercase tracking-[0.15em] text-xs font-bold">Eventos celebrados</span>
       </div>
       <div class="flex flex-col items-center justify-center gap-2 pt-8 sm:pt-0">
         <span class="font-primary font-ultra text-brand-primary leading-none flex items-center gap-2" style="font-size: clamp(3rem, 7vw, 4.5rem);">
-          4.9
+          <span class="stat-num" data-count="4.9" data-decimals="1">4.9</span>
           <svg class="w-8 h-8 md:w-9 md:h-9 text-brand-secondary" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .587l3.668 7.431 8.2 1.192-5.934 5.784 1.401 8.168L12 18.896l-7.335 3.856 1.401-8.168L.132 9.21l8.2-1.192z"/></svg>
         </span>
         <span class="text-brand-muted uppercase tracking-[0.15em] text-xs font-bold">Calificación en reseñas</span>
       </div>
       <div class="flex flex-col items-center justify-center gap-2 pt-8 sm:pt-0">
-        <span class="font-primary font-ultra text-brand-primary leading-none" style="font-size: clamp(3rem, 7vw, 4.5rem);">12</span>
+        <span class="font-primary font-ultra text-brand-primary leading-none stat-num" style="font-size: clamp(3rem, 7vw, 4.5rem);" data-count="12">12</span>
         <span class="text-brand-muted uppercase tracking-[0.15em] text-xs font-bold">Años de experiencia</span>
       </div>
     </div>
@@ -709,7 +759,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
       <!-- XV Años -->
-      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
+      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
           <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">XV Años</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
@@ -733,7 +783,7 @@
       </figure>
 
       <!-- Corporativo -->
-      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
+      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
           <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Corporativo</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
@@ -757,7 +807,7 @@
       </figure>
 
       <!-- Boda -->
-      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
+      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
           <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Boda</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
@@ -781,7 +831,7 @@
       </figure>
 
       <!-- Social -->
-      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2" data-animation-on-scroll="">
+      <figure class="group flex flex-col gap-6 p-8 md:p-10 bg-neutral-surface rounded-3xl border border-brand-primary/5 transition-all duration-500" data-animation-on-scroll="">
         <div class="flex items-center justify-between">
           <span class="text-gold-ink font-bold tracking-[0.15em] uppercase text-xs">Social</span>
           <div class="flex gap-1 text-brand-secondary" aria-label="5 de 5 estrellas">
@@ -809,8 +859,8 @@
     <!-- Cierre / CTA suave -->
     <div class="text-center" data-animation-on-scroll="">
       <p class="text-brand-muted italic mb-6">Tu evento puede ser el próximo que todos recuerden.</p>
-      <a href="#contact" class="bg-brand-primary text-white font-medium px-8 py-4 rounded-full hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
-        Quiero mi cotización
+      <a href="#contact" class="magnetic bg-brand-primary text-white font-medium px-8 py-4 rounded-full hover:bg-brand-secondary transition-all inline-flex items-center gap-2">
+        <span>Quiero mi cotización</span>
       </a>
     </div>
 
@@ -822,18 +872,18 @@
   <div class="max-w-7xl mx-auto flex flex-col gap-16">
 
     <!-- Encabezado de sección -->
-    <div class="text-center" data-animation-on-scroll="">
+    <div class="text-left" data-animation-on-scroll="">
       <div class="inline-block mb-4 overflow-hidden">
         <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">05</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Preguntas</span></span>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Antes de apartar tu fecha</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Resolvemos las dudas más comunes. ¿Te queda otra? Marisol, nuestra coordinadora, te atiende con gusto.</p>
+      <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Antes de apartar tu fecha</h2>
+      <p class="max-w-2xl text-lg text-brand-muted italic">Resolvemos las dudas más comunes. ¿Te queda otra? Marisol, nuestra coordinadora, te atiende con gusto.</p>
     </div>
 
     <!-- Acordeón nativo (una columna centrada, sin JavaScript) -->
     <div class="max-w-3xl mx-auto w-full flex flex-col gap-4" data-animation-on-scroll="">
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl" open>
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm" open>
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Cómo aparto mi fecha y cuánto es el anticipo?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -843,7 +893,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Puedo llevar mis propios proveedores o catering?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -853,7 +903,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Hay estacionamiento y seguridad para mis invitados?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -863,7 +913,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Cuál es la capacidad del salón y el jardín?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -873,7 +923,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿El jardín tiene plan B en caso de lluvia?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -883,7 +933,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿Qué formas de pago y planes manejan?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -893,7 +943,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿A qué hora puede terminar el evento?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -903,7 +953,7 @@
         </div>
       </details>
 
-      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-xl">
+      <details class="faq-item group bg-white rounded-2xl border border-brand-primary/5 transition-shadow duration-500 open:shadow-sm">
         <summary class="faq-summary flex items-center justify-between gap-6 cursor-pointer px-6 md:px-8 py-6">
           <span class="font-primary font-bold text-xl md:text-2xl text-brand-primary">¿El evento incluye coordinación?</span>
           <svg class="faq-chevron w-6 h-6 shrink-0 text-brand-secondary transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
@@ -931,19 +981,19 @@
   <div class="max-w-7xl w-full mx-auto flex flex-col gap-16">
 
     <!-- Encabezado cálido -->
-    <div class="text-center" data-animation-on-scroll="">
+    <div class="text-left" data-animation-on-scroll="">
       <div class="inline-block mb-4 overflow-hidden">
         <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">06</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Contacto</span></span>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Ven a conocernos</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Agenda una visita sin costo. Marisol, nuestra coordinadora, te recibe y resuelve todas tus dudas de fechas, paquetes y servicios.</p>
+      <h2 data-mask class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Ven a conocernos</h2>
+      <p class="max-w-2xl text-lg text-brand-muted italic">Agenda una visita sin costo. Marisol, nuestra coordinadora, te recibe y resuelve todas tus dudas de fechas, paquetes y servicios.</p>
     </div>
 
     <!-- 2 columnas: IZQUIERDA datos · DERECHA mapa -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
       <!-- IZQUIERDA · Tarjeta de datos -->
-      <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-lg p-8 md:p-10 flex flex-col gap-7" data-animation-on-scroll="">
+      <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-sm p-8 md:p-10 flex flex-col gap-7" data-animation-on-scroll="">
         <div>
           <h3 class="font-primary font-ultra text-3xl text-brand-primary">Hacienda Los Encinos</h3>
           <p class="text-brand-muted italic mt-1">Con Marisol, coordinadora de eventos.</p>
@@ -1005,7 +1055,7 @@
 
       <!-- DERECHA · Mapa OpenStreetMap -->
       <div class="flex flex-col gap-4" data-animation-on-scroll="">
-        <div class="flex-1 rounded-2xl overflow-hidden border border-brand-primary/10 shadow-lg min-h-[360px] bg-neutral-surface">
+        <div class="flex-1 rounded-2xl overflow-hidden border border-brand-primary/10 shadow-sm min-h-[360px] bg-neutral-surface">
           <iframe
             title="Ubicación de Hacienda Los Encinos en el mapa"
             class="w-full h-full"
@@ -1023,7 +1073,7 @@
     </div>
 
     <!-- Ancho completo · Formulario a WhatsApp -->
-    <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-lg p-8 md:p-12" data-animation-on-scroll="">
+    <div class="bg-white rounded-3xl border border-brand-primary/5 shadow-sm p-8 md:p-12" data-animation-on-scroll="">
       <div class="max-w-3xl mx-auto text-center mb-8">
         <span class="text-gold-ink font-bold tracking-[0.2em] uppercase text-xs">Cotización rápida</span>
         <h3 class="font-primary font-ultra text-3xl md:text-4xl text-brand-primary mt-3">Cuéntanos de tu evento</h3>
@@ -1141,7 +1191,7 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-on-scroll-visible');
+            entry.target.classList.add('animate-on-scroll-visible', 'is-in');
             observer.unobserve(entry.target);
           }
         });
@@ -1202,12 +1252,12 @@
       function navFrame(y){
         if(!nav) return;
         if(y > 100){
-          nav.classList.add('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
+          nav.classList.add('bg-white/70','backdrop-blur-xl','shadow-sm','border','border-white/20');
           if(logo) logo.classList.replace('text-white','text-brand-primary');
           if(navToggle) navToggle.classList.replace('text-white','text-brand-primary');
           navLinks.forEach(l => l.classList.replace('text-white/90','text-text-primary'));
         } else {
-          nav.classList.remove('bg-white/70','backdrop-blur-xl','shadow-lg','border','border-white/20');
+          nav.classList.remove('bg-white/70','backdrop-blur-xl','shadow-sm','border','border-white/20');
           if(logo) logo.classList.replace('text-brand-primary','text-white');
           if(navToggle) navToggle.classList.replace('text-brand-primary','text-white');
           navLinks.forEach(l => l.classList.replace('text-text-primary','text-white/90'));
@@ -1248,17 +1298,35 @@
       document.body.appendChild(waFab);
       function fabFrame(y){ waFab.classList.toggle('show', y > window.innerHeight * 0.6); }
 
+      /* AWWWARDS: hero fade + barra de progreso (refs antes del scheduler) */
+      const heroContent = document.getElementById('hero-content');
+      function heroContentFrame(y){
+        if(REDUCE || !heroContent) return;
+        const f = Math.max(0, 1 - (y / (window.innerHeight * 0.7)));
+        heroContent.style.setProperty('--hero-fade', f.toFixed(3));
+      }
+      const scrollBar = document.getElementById('scroll-progress');
+      let docH = 0;
+      function measureDoc(){ docH = document.documentElement.scrollHeight - window.innerHeight; }
+      measureDoc();
+      function progressFrame(){
+        if(!scrollBar) return;
+        const p = docH > 0 ? Math.min(window.scrollY / docH, 1) : 0;
+        scrollBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      }
+
       /* 8. Scheduler único rAF (coalesce de nav + parallax + timeline + fab) */
       let ticking = false;
       function onScrollFrame(){
         const y = window.scrollY;
-        navFrame(y); heroFrame(y); timelineFrame(); fabFrame(y);
+        navFrame(y); heroFrame(y); timelineFrame(); fabFrame(y); heroContentFrame(y); progressFrame();
         ticking = false;
       }
       window.addEventListener('scroll', () => {
         if(!ticking){ ticking = true; requestAnimationFrame(onScrollFrame); }
       }, { passive:true });
       window.addEventListener('resize', () => {
+        measureDoc();
         if(!ticking){ ticking = true; requestAnimationFrame(onScrollFrame); }
       }, { passive:true });
       onScrollFrame();
@@ -1333,6 +1401,63 @@
           if (!mobileMenu.classList.contains('hidden') && !mobileMenu.contains(e.target) && !navToggle.contains(e.target)) setMenu(false);
         });
       }
+      /* AWWWARDS: mascara de linea en titulos marcados con data-mask */
+      if(!REDUCE){
+        document.querySelectorAll('[data-mask]').forEach(h => {
+          const t = h.textContent.trim();
+          h.innerHTML = '<span class="mask-line"><span class="inner">' + t + '</span></span>';
+        });
+      }
+
+      /* AWWWARDS: reveals direccionales independientes */
+      (function(){
+        const els = document.querySelectorAll('[data-reveal]');
+        if(!els.length) return;
+        if(REDUCE){ els.forEach(el => el.classList.add('is-in')); return; }
+        const rio = new IntersectionObserver((es) => {
+          es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('is-in'); rio.unobserve(e.target); } });
+        }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+        els.forEach(el => rio.observe(el));
+      })();
+
+      /* AWWWARDS: contadores animados */
+      (function(){
+        function animateCount(el){
+          const end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.decimals || '0', 10);
+          const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+          if(REDUCE){ el.textContent = pre + end.toFixed(dec) + suf; return; }
+          const t0 = performance.now(), dur = 1600, ease = t => 1 - Math.pow(1 - t, 3);
+          (function fr(now){ const p = Math.min((now - t0) / dur, 1); el.textContent = pre + (end * ease(p)).toFixed(dec) + suf; if(p < 1) requestAnimationFrame(fr); else el.textContent = pre + end.toFixed(dec) + suf; })(performance.now());
+        }
+        const counters = document.querySelectorAll('[data-count]');
+        if(!counters.length) return;
+        const cio = new IntersectionObserver((es) => es.forEach(e => { if(e.isIntersecting){ animateCount(e.target); cio.unobserve(e.target); } }), { threshold: 0.6 });
+        counters.forEach(c => cio.observe(c));
+      })();
+
+      /* AWWWARDS: botones magneticos (solo puntero fino) */
+      (function(){
+        const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if(!fine || REDUCE) return;
+        document.querySelectorAll('.magnetic').forEach(btn => {
+          const inner = btn.querySelector('span') || btn;
+          let raf = null, tx = 0, ty = 0;
+          btn.addEventListener('pointermove', (e) => {
+            const r = btn.getBoundingClientRect();
+            tx = (e.clientX - (r.left + r.width / 2)) * 0.3;
+            ty = (e.clientY - (r.top + r.height / 2)) * 0.3;
+            if(!raf) raf = requestAnimationFrame(() => { btn.style.transform = 'translate3d(' + tx + 'px,' + ty + 'px,0)'; inner.style.transform = 'translate3d(' + (tx * 0.4) + 'px,' + (ty * 0.4) + 'px,0)'; raf = null; });
+          });
+          btn.addEventListener('pointerleave', () => { btn.style.transform = ''; inner.style.transform = ''; });
+        });
+      })();
+
+      /* AWWWARDS: duplicar marquee para loop continuo */
+      if(!REDUCE){ document.querySelectorAll('.marquee__track').forEach(t => { t.innerHTML += t.innerHTML; }); }
+
+      /* recalcular alto tras insertar marquee */
+      measureDoc(); onScrollFrame();
+
     });
   </script>
 
