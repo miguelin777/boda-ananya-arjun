@@ -419,88 +419,60 @@
 </section>
 
 <!-- Habitaciones -->
-<section id="timeline" class="py-24 bg-white relative z-10 border-t border-neutral-surface">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-24" data-animation-on-scroll="">
-      <div class="inline-block mb-4 overflow-hidden">
-        <span class="inline-flex items-center gap-3 align-middle"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">02</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Habitaciones</span></span>
+<section id="timeline" class="w-full py-24 px-6 md:px-12 bg-white relative z-10 border-t border-brand-primary/5">
+  <div class="max-w-7xl mx-auto flex flex-col gap-14">
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6" data-animation-on-scroll="">
+      <div>
+        <span class="inline-flex items-center gap-3 align-middle mb-4"><span class="text-gold-ink font-bold text-sm tracking-[0.25em]">02</span><span class="w-8 h-px bg-brand-primary/40"></span><span class="text-brand-primary font-bold tracking-[0.25em] uppercase text-xs">Habitaciones</span></span>
+        <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em]">Nuestras habitaciones</h2>
       </div>
-      <h2 class="font-primary text-4xl md:text-5xl lg:text-6xl font-ultra text-brand-primary tracking-[-0.015em] mb-6">Nuestras habitaciones</h2>
-      <p class="max-w-2xl mx-auto text-lg text-brand-muted italic">Tres formas de habitar la casa, cada una con su propio carácter.</p>
+      <p class="md:max-w-[16rem] md:text-right text-brand-muted italic leading-relaxed">Tres formas de habitar la casa, cada una con su carácter.</p>
     </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" data-animation-on-scroll="" data-stagger>
+      <article class="group flex flex-col">
+        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+          <div class="aspect-[4/5] w-full bg-neutral-surface">
+            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Habitación Estándar con cama queen" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+          <span aria-hidden="true" class="absolute top-5 left-6 font-primary text-white/80 text-xl">01</span>
+          <div class="absolute inset-x-0 bottom-0 p-6">
+            <span class="text-brand-secondary font-bold tracking-[0.18em] uppercase text-[11px]">Cama queen · vista al patio</span>
+            <h3 class="font-primary text-2xl md:text-[1.7rem] text-white leading-tight mt-1">Habitación Estándar</h3>
+          </div>
+        </div>
+        <p class="text-brand-muted leading-relaxed mt-5">Acogedora y luminosa, con cama queen, textiles de algodón y baño privado. Ventanas al patio interior para despertar en calma.</p>
+      </article>
 
-    <div class="space-y-0 max-w-5xl mx-auto relative">
-      <!-- Línea vertical continua -->
-      <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-[1px] bg-gradient-to-b from-brand-primary/0 via-brand-primary/30 to-brand-primary/0 -translate-x-1/2"></div>
+      <article class="group flex flex-col">
+        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+          <div class="aspect-[4/5] w-full bg-neutral-surface">
+            <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Suite con cama king y sala de estar" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+          <span aria-hidden="true" class="absolute top-5 left-6 font-primary text-white/80 text-xl">02</span>
+          <div class="absolute inset-x-0 bottom-0 p-6">
+            <span class="text-brand-secondary font-bold tracking-[0.18em] uppercase text-[11px]">Cama king · sala de estar</span>
+            <h3 class="font-primary text-2xl md:text-[1.7rem] text-white leading-tight mt-1">Suite</h3>
+          </div>
+        </div>
+        <p class="text-brand-muted leading-relaxed mt-5">Más espacio para tu estancia: cama king, sala de estar y balcón privado. Amenidades de autor y ropa de cama premium para dormir profundo.</p>
+      </article>
 
-      <!-- Habitación Estándar (izquierda) -->
-      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
-        <div class="flex-1 md:text-right order-2 md:order-1 space-y-6 pb-24 transition-all duration-700 group-hover:translate-x-[-10px]">
-          <div class="md:hidden text-brand-primary font-bold mb-2">Estándar · Vista al patio</div>
-          <h3 class="font-primary text-4xl font-bold text-brand-primary">Habitación Estándar</h3>
-          <p class="text-brand-muted leading-relaxed">Acogedora y luminosa, con cama queen, textiles de algodón y baño privado. Ventanas al patio interior para despertar en calma.</p>
-          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Habitación estándar con cama queen y luz natural" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
+      <article class="group flex flex-col">
+        <div class="relative overflow-hidden rounded-2xl shadow-lg">
+          <div class="aspect-[4/5] w-full bg-neutral-surface">
+            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=900&amp;auto=format&amp;fit=crop&amp;q=75" alt="Suite Premium con terraza y jacuzzi" loading="lazy" class="w-full h-full object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.06]">
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+          <span aria-hidden="true" class="absolute top-5 left-6 font-primary text-white/80 text-xl">03</span>
+          <div class="absolute inset-x-0 bottom-0 p-6">
+            <span class="text-brand-secondary font-bold tracking-[0.18em] uppercase text-[11px]">Terraza privada · jacuzzi</span>
+            <h3 class="font-primary text-2xl md:text-[1.7rem] text-white leading-tight mt-1">Suite Premium</h3>
           </div>
         </div>
-        <div class="hidden md:flex flex-col items-center order-2 relative">
-          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
-             <div class="w-2 h-2 rounded-full bg-brand-primary animate-ping tl-dot-inner"></div>
-          </div>
-        </div>
-        <div class="hidden md:block flex-1 order-3 pt-1 pl-4">
-          <div class="bg-brand-primary/5 border-l-2 border-brand-primary p-4 rounded-r-lg">
-             <span class="text-brand-primary font-bold text-2xl block">Estándar</span>
-             <span class="text-brand-muted font-medium">Cama queen · vista al patio</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- XV Años (derecha) -->
-      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
-        <div class="hidden md:block flex-1 text-right pt-1 pr-4">
-          <div class="bg-brand-primary/5 border-r-2 border-brand-primary p-4 rounded-l-lg">
-             <span class="text-brand-primary font-bold text-2xl block">Suite</span>
-             <span class="text-brand-muted font-medium">Cama king · sala de estar</span>
-          </div>
-        </div>
-        <div class="hidden md:flex flex-col items-center relative">
-          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
-             <div class="w-2 h-2 rounded-full bg-brand-primary tl-dot-inner"></div>
-          </div>
-        </div>
-        <div class="flex-1 space-y-6 pb-24 transition-all duration-700 group-hover:translate-x-[10px]">
-          <div class="md:hidden text-brand-primary font-bold mb-2">Suite · Cama king</div>
-          <h3 class="font-primary text-4xl font-bold text-brand-primary">Suite</h3>
-          <p class="text-brand-muted leading-relaxed">Más espacio para tu estancia: cama king, sala de estar y balcón privado. Amenidades de autor y ropa de cama premium para dormir profundo.</p>
-          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1615874959474-d609969a20ed?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Suite con cama king y balcón privado" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
-          </div>
-        </div>
-      </div>
-
-      <!-- Social & Corporativo (izquierda) -->
-      <div class="flex flex-col md:flex-row gap-8 md:gap-16 items-center md:items-start group" data-animation-on-scroll="">
-        <div class="flex-1 md:text-right order-2 md:order-1 space-y-6 pb-8 transition-all duration-700 group-hover:translate-x-[-10px]">
-          <div class="md:hidden text-brand-primary font-bold mb-2">Suite Premium · Terraza privada</div>
-          <h3 class="font-primary text-4xl font-bold text-brand-primary">Suite Premium</h3>
-          <p class="text-brand-muted leading-relaxed">Nuestra habitación más amplia: terraza privada con vista a la ciudad, jacuzzi y sala independiente. La experiencia más serena de la casa.</p>
-          <div class="overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-500" data-reveal-img>
-            <img src="https://images.unsplash.com/photo-1611892440504-42a792e24d32?w=800&amp;auto=format&amp;fit=crop&amp;q=70" alt="Suite Premium con terraza privada y jacuzzi" loading="lazy" class="w-full h-80 object-cover hover:scale-110 transition-transform duration-700">
-          </div>
-        </div>
-        <div class="hidden md:flex flex-col items-center order-2">
-          <div class="w-8 h-8 rounded-full border-4 border-brand-primary bg-white z-10 flex items-center justify-center transition-transform duration-500 group-hover:scale-125 tl-node">
-             <div class="w-2 h-2 rounded-full bg-brand-primary animate-pulse tl-dot-inner"></div>
-          </div>
-        </div>
-        <div class="hidden md:block flex-1 order-3 pt-1 pl-4">
-          <div class="bg-brand-primary/5 border-l-2 border-brand-primary p-4 rounded-r-lg">
-             <span class="text-brand-primary font-bold text-2xl block">Suite Premium</span>
-             <span class="text-brand-muted font-medium">Terraza privada · jacuzzi</span>
-          </div>
-        </div>
-      </div>
+        <p class="text-brand-muted leading-relaxed mt-5">Nuestra habitación más amplia: terraza privada con vista a la ciudad, jacuzzi y sala independiente. La experiencia más serena de la casa.</p>
+      </article>
     </div>
   </div>
 </section>
